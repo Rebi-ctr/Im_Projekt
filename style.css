@@ -1,35 +1,3 @@
-body {
-    margin: 0;
-    height: 100vh;
-    animation: strobe 0.2s infinite alternate;
-}
-
-@keyframes strobe {
-    0% {
-        background-color: black;
-    }
-
-    100% {
-        background-color: white;
-    }
-}
-
 h1 {
-    color: red;
-}
-
-h2 {
     color: blue;
-}
-
-h3 {
-    color: green;
-}
-
-h4 {
-    color: orange;
-}
-
-h5 {
-    color: purple;
 }
