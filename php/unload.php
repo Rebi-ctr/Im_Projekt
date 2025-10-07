@@ -16,6 +16,8 @@
 
 require_once 'config.php'; // Stellen Sie sicher, dass dies auf Ihre tatsächliche Konfigurationsdatei verweist
 
+header('Content-Type: application/json; charset=utf-8');
+
 try {
     // Erstellt eine neue PDO-Instanz mit der Konfiguration aus config.php
     $pdo = new PDO($dsn, $username, $password, $options);
@@ -46,9 +48,9 @@ ORDER BY a.city, a.datetimelocal DESC;";
     // Gibt die Ergebnisse als JSON aus
     echo json_encode($results_airpollution);
 } catch (PDOException $e) {
+
     // Bei einem Fehler eine JSON-Fehlermeldung zurückgeben
-    http_response_code(500);
+   //  http_response_code(500);
     echo json_encode(["error" => "Datenbankfehler: " . $e->getMessage()]);
 }
 
-header('Content-Type: application/json');
