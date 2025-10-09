@@ -5,13 +5,7 @@
   --text-title: #7A282E;
   --highlight: #C0F6FF;
   --titel-braun: #FFD09A;
-  --font: 
-.cormorant-garamond-<uniquifier> {
-  font-family: "Cormorant Garamond", serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-}'Helvetica Neue', sans-serif;
+  --font: 'Helvetica Neue', sans-serif;
 }
 
 /* Grundlayout */
