@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kolkata</title>
+    <title>Delih</title>
 
     <!-- Dein Stylesheet -->
     <link rel="stylesheet" href="css/kolkata.css" />
@@ -13,13 +13,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 </head>
 
-<body data-city="Mumbai">
+<body data-city="Chennai">
     <!-- (Optional) Diese Übersichtstabelle brauchst du auf einer Stadt-Detailseite eigentlich nicht.
        Wenn du sie nicht willst: gesamten <section> Block löschen. -->
     <section class="infoWeatherAndAirQuality">
         <div class="AirQuality">
             <div class="bottomInfo">
-                <h1>Mumbai</h1>
+                <h1>Delhi</h1>
             </div>
             <div class="PMValue">
                 <h2>PM10: <span id="pm10-avg">–</span> μg/m³</h2><!-- dynamisch -->
@@ -36,70 +36,6 @@
 
     <section class="CityImage">
         <img src="img/Kolkata.png" alt="Bild Kolkata">
-    </section>
-
-    <section class="infoWeatherAndAirQuality">
-        <div class="AirQuality">
-            <div class="bottomInfo">
-                <h1>KOLKATA</h1>
-            </div>
-            <div class="PMValue">
-                <h2>PM10: <span id="pm10-avg">–</span> μg/m³</h2><!-- dynamisch -->
-                <small>(n=<span id="pm10-n">0</span>)</small><!-- dynamisch -->
-            </div>
-        </div>
-
-        <div class="timeAndDate">
-            <!-- Wenn du keine Live-Uhr brauchst, kannst du diese beiden Blöcke entfernen -->
-            <div class="localTime">
-                <h1>—</h1>
-            </div>
-            <div class="localDate">
-                <h2>—</h2>
-            </div>
-        </div>
-
-        <div class="weather">
-            <div class="bottomInfo">
-                <h1>WEATHER</h1>
-            </div>
-            <div class="temperature">
-                <h2>—°C</h2>
-            </div>
-            <div class="weatherIcon"><img src="img/sun.png" alt="Sonne"></div>
-        </div>
-    </section>
-
-    <section class="CityInfo">
-        <div class="Name">
-            <h1>KOLKATA</h1>
-        </div>
-        <div class="Description">
-            <div class="BottomAverages">
-                <div class="Record">
-                    <h2>PM 2.5: 85μg/m³</h2>
-                    <h4>RECORD</h4>
-                </div>
-                <div class="BottomAverages">
-                    <h2>PM 2.5: 85μg/m³</h2>
-                    <h4>AVERAGE</h4>
-                </div>
-                <div class="BottomAverages">
-                    <h2>PM 2.5: 85μg/m³</h2>
-                    <h4>LOWEST</h4>
-                </div>
-            </div>
-
-            <div class="InfoCity">
-                <p>… deine Beschreibung …</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="Chart">
-        <h1>AIR QUALITY (HISTORIE)</h1>
-        <!-- Wichtig: ID exakt so wie im JS -->
-        <canvas id="airQualityChart"></canvas>
     </section>
 </body>
 

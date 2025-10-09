@@ -22,7 +22,7 @@ async function renderCityAverage() {
     const city = document.body.dataset.city;
     if (!city) return console.error('data-city fehlt auf <body>.');
 
-    const res = await fetch(API_CITY(city), { credentials: 'include' });
+    const res = await fetch(API_CITY(city));
     if (!res.ok) throw new Error(`HTTP ${res.status} für ${city}`);
     const data = await res.json();  // [{city, pm10, datetimelocal, ...}, ...]
 
@@ -30,27 +30,6 @@ async function renderCityAverage() {
     const { n, avg } = averagePm10(data);
     setText('#pm10-avg', avg.toFixed(2));
     setText('#pm10-n', String(n));
-
-    // Optional: Verlauf (Index-basiert, keine Zeitachsen)
-    const canvas = document.getElementById('airQualityChart');
-    if (canvas && window.Chart) {
-        const sorted = [...data].sort((a, b) => new Date(a.datetimelocal) - new Date(b.datetimelocal));
-        const labels = sorted.map((_, i) => String(i + 1)); // nur Index statt Zeit
-        const values = sorted.map(r => Number(r.pm10));
-
-        new Chart(canvas, {
-            type: 'line',
-            data: {
-                labels,
-                datasets: [{ label: `PM10 – ${city}`, data: values, tension: 0.3 }]
-            },
-            options: {
-                responsive: true,
-                plugins: { legend: { display: true } },
-                scales: { y: { title: { display: true, text: 'µg/m³' } } }
-            }
-        });
-    }
 
     // (Optional) Falls die Übersichtstabelle auf der Seite bleiben soll,
     // kannst du hier die eine Zeile für diese Stadt füllen:
