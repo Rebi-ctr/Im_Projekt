@@ -72,3 +72,61 @@ if (myChart) {
 } else {
     console.error('Cannot create chart: Canvas element not found');
 }
+
+
+/// average city function ///
+
+const cities = ["Bangalore", "Delhi", "Chennai", "Mumbai", "Kolkata"];
+
+const cityEndpoint = city => `https://im3.rebecca-baumberger.ch/php/unload.php?city=${encodeURIComponent(city)}`;
+
+function averagePm10FromRows(rows) {
+    const values = rows
+        .map(r => parseFloat(r.pm10))
+        .filter(v => Number.isFinite(v));
+    const n = values.length;
+    const sum = values.reduce((a, b) => a + b, 0);
+    return { n, avg: n ? sum / n : 0 };
+}
+
+async function fetchCityAverage(city) {
+    const res = await fetch(cityEndpoint(city));
+    if (!res.ok) throw new Error(`HTTP ${res.status} für ${city}`);
+    const data = await res.json();
+    const { n, avg } = averagePm10FromRows(data);
+    return { city, n, avg: Number(avg.toFixed(2)) };
+}
+
+async function loadAllAverages() {
+    const tbody = document.querySelector('#avg-table tbody');
+    tbody.innerHTML = '<tr><td colspan="3">Loading...</td></tr>';
+
+    try {
+        const results = await Promise.allSettled(cities.map(fetchCityAverage));
+        const ok = results
+            .filter(r => r.status === 'fulfilled')
+            .map(r => r.value);
+
+        tbody.innerHTML = '';
+        ok.forEach(({ city, n, avg }) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${city}</td><td>${n}</td><td>${avg.toFixed(2)}</td>`;
+            tbody.appendChild(tr);
+        });
+
+        results
+            .filter(r => r.status === 'rejected')
+            .forEach((r, i) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${cities[i]}</td><td>-</td><td>Error</td>`;
+                tbody.appendChild(tr);
+                console.error(`Fehler bei ${cities[i]}:`, r.reason);
+            });
+
+    } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="3">Fehler beim Laden</td></tr>`;
+        console.error(e);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadAllAverages);
