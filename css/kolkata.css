@@ -1,17 +1,16 @@
 :root {
   --bg-night: #001b1f;
   --bg-ground: #4E2A00;
-  --text-light: #d9d9d9;
+  --lightgrey: #d9d9d9;
   --text-title: #7A282E;
-  --highlight: #C0F6FF;
+  --lightblue: #C0F6FF;
   --titel-braun: #FFD09A;
-  --font: 
-.cormorant-garamond-<uniquifier> {
+  --font:cormorant-garamond-<uniquifier> {
   font-family: "Cormorant Garamond", serif;
   font-optical-sizing: auto;
-  font-weight: <weight>;
+  font-weight: <light-300|regular-400|medium-500|semibold-600|bold-700>;
   font-style: normal;
-}'Helvetica Neue', sans-serif;
+}
 }
 
 /* Grundlayout */
@@ -19,35 +18,34 @@ body {
   margin: 0;
   font-family: var(--font);
   background-color: var(--bg-night);
-  color: var(--text-light);
+  color: var(--lightgrey);
 }
 
 /* Zurück-Button */
 .header {
   padding: 16px;
+  margin-bottom: -60px;
 }
 .back-button img {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
 }
 
 /* Info-Boxen über dem Stadtbild */
-.info-bar {
+.info-container {
   display: flex;
   justify-content: space-around;
   align-items: center;
   flex-wrap: wrap;
   text-align: center;
+  background-color: transparent;
 }
 
 .info-box h2 {
   font-size: 35px;
   color: var(--text-title);
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  background-color: var(--text-light);
+  padding: 10px 40px;  
+  background-color: var(--lightgrey);
   margin-bottom: 4px;
   margin-top: 120px;
   border-radius: 100px;
@@ -55,7 +53,7 @@ body {
 
 .info-box p {
   font-size: 20px;
-  color: var(--highlight);
+  color: var(--lightblue);
 }
 
 .weather-info {
@@ -72,26 +70,65 @@ body {
 
 .time-box h2 {
   text-align: center;
-  color: var(--highlight);
+  color: var(--lightblue);
   font-size: 70px;
 }
 
 .time-box p {
   text-align: center;
-  color: var(--highlight);
+  color: var(--lightblue);
   font-size: 10px;
 }
 
-/* Stadtbild */
+/* ===== Stadtbild ===== */
 .city-image {
+  position: relative;
   text-align: center;
   margin: 1rem 0;
+  overflow: hidden;
 }
+
+/* Tag/Nacht-Hintergrund */
+.city-image::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, var(--sky-day), var(--sky-night));
+  z-index: 0;
+  transition: background 1s ease-in-out;
+}
+
+/* Das Stadtbild selbst */
 .city-image img {
   width: 100%;
   max-width: 700px;
   height: auto;
+  position: relative;
+  z-index: 2;
 }
+
+/* ===== Runder Tag/Nacht-Slider (zentriert hinter dem Bild) ===== */
+.day-night-toggle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  z-index: -4;
+  transition: all 0.5s ease;
+  pointer-events: none; /* Wichtig: verhindert, dass der Kreis das Bild blockiert */
+}
+
+/* Zustand: Nacht (per Hover – Demo) */
+.city-image:hover .day-night-toggle {
+  background: radial-gradient(circle at 70% 70%, #C0F6FF, #001B1F);
+  box-shadow: 0 0 40px rgba(0, 200, 255, 0.4);
+}
+
 
 /* Stadtinfos */
 .city-info {
@@ -117,7 +154,7 @@ body {
 }
 
 .city-info p {
-  color: var(--text-light);
+  color: var(--lightgrey);
   font-size: 18px;
   margin: 0;
 }
