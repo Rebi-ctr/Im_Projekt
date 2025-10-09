@@ -1,91 +1,80 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kolkata</title>
-    <link rel="stylesheet" href="css/kolkata.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kolkata</title>
+  <link rel="stylesheet" href="css/kolkata.css">
 </head>
 <body>
-    <section class="topBar">
-        <div class="backButton">
-            <a href="index.html"><img src="img/Zurück Button.svg" alt="Zurück"></a>
+
+  <header class="header">
+    <a href="index.html" class="back-button">
+      <img src="img/Zurück Button.svg" alt="Zurück">
+    </a>
+  </header>
+
+  <main>
+    <!-- Info-Boxen über dem Stadtbild -->
+    <section class="info-bar">
+      <div class="info-box">
+        <h2>KOLKATA</h2>
+        <p>PM 10μg/m³</p>
+      </div>
+
+      <div class="time-box">
+        <h2>12:45</h2>
+        <p>12. März 2023</p>
+      </div>
+
+      <div class="info-box">
+        <h2>WEATHER</h2>
+        <div class="weather-info">
+          <p>32°C</p>
+          <img src="img/sun.png" alt="Sonne">
         </div>
+      </div>
     </section>
 
-    <section class="CityImage">
-            <img src="img/Kolkata.png" alt="BildKolkata"> 
+    <!-- Stadtbild -->
+    <section class="city-image">
+      <img src="img/Kolkata.png" alt="Kolkata">
     </section>
 
-    <section class="infoWeatherAndAirQuality">
-        <div class="AirQuality">
-    
-            <div class="bottomInfo">
-                <h1>KOLKATA</h1>
+    <!-- Stadtinfos -->
+    <section class="city-info">
+      <h1>KOLKATA</h1>
+      <div class="city-info-content">
+        <div class="record-list">
+            <div class="record-item">
+                <h3 class="red">85 PM10 μg/m³</h3>
+                <p class="red">RECORD</p>
             </div>
-            <div class="PMValue">
-                <h2>PM 10μg/m³</h2> <!-- dynamisch -->
-            </div>  
+            <div class="record-item">
+                <h3>70 PM10 μg/m³</h3>
+                <p>AVERAGE</p>
+            </div>
+            <div class="record-item">
+                <h3>55 PM10 μg/m³</h3>
+                <p>LOWEST</p>
+            </div>
         </div>
+      
 
-        <div class="timeAndDate">
-            <div class="localTime">
-                <h1>12:45</h1> <!-- dynamisch -->
-            </div>
-            <div class="localDate">
-                <h2>12. März 2023</h2> <!-- dynamisch -->
-            </div>
-        </div>
-
-        <div class="weather">
-            <div class="bottomInfo">
-                <h1>WEATHER</h1>
-            </div>
-            <div class="temperature">
-                <h2>32°C</h2> <!-- dynamisch -->
-            </div>
-            <div class="weatherIcon">
-                <img src="img/sun.png" alt="Sonne"> <!-- dynamisch -->
-            </div>
-        </div>
+        <p class="description">
+            Kolkata, früher bekannt als Kalkutta, ist die Hauptstadt des indischen Bundesstaates Westbengalen.
+            Die Stadt liegt am östlichen Ufer des Flusses Hooghly und ist eine der größten Städte Indiens.
+            Kolkata ist bekannt für seine reiche kulturelle Geschichte, seine literarische Tradition und
+            ihre Rolle in der indischen Unabhängigkeitsbewegung.
+        </p>
+      </div>
     </section>
 
-    <section class="CityInfo">
-        <div class="Name">
-            <h1>KOLKATA</h1>
-        </div>
-
-        <div class="Description">
-            <div class="BottomAverages">
-                <div class="Record">
-                    <h2>PM 2.5: 85μg/m³</h2> <!-- dynamisch -->
-                    <h4>RECORD</h4> 
-                </div>
-
-                <div class="BottomAverages">
-                    <h2>PM 2.5: 85μg/m³</h2> <!-- dynamisch -->
-                    <h4>AVERAGE</h4> 
-                </div>
-
-                <div class="BottomAverages">
-                    <h2>PM 2.5: 85μg/m³</h2> <!-- dynamisch -->
-                    <h4>LOWEST</h4> 
-                </div>
-            </div>
-
-            <div class="InfoCity">
-                <p>Kolkata, früher bekannt als Kalkutta, ist die Hauptstadt des indischen Bundesstaates Westbengalen. Die Stadt liegt am östlichen Ufer des Flusses Hooghly und ist eine der größten Städte Indiens. Kolkata ist bekannt für seine reiche kulturelle Geschichte, seine literarische Tradition und seine bedeutende Rolle in der indischen Unabhängigkeitsbewegung. Die Stadt beherbergt zahlreiche historische Gebäude, Museen und Kunstgalerien. Zudem ist Kolkata ein wichtiger wirtschaftlicher Knotenpunkt mit florierenden Industrien wie Textilien, Informationstechnologie und Filmproduktion.</p>
-            </div>
-        </div>
+    <section class="chart">
+      <h1>AIR QUALITY IN THE PAST WEEK:</h1>
+      <canvas id="airQualityChartKolkata"></canvas>
     </section>
-
-    <section class="Chart">
-        <h1>AIR QUALITY IN THE PAST WEEK:</h1>
-        <canvas id="airQualityChartKolkata"></canvas>
-
-    </section>
-
-    <script src="js/kolkata.js"></script>
+  </main>
 
 </body>
 </html>
