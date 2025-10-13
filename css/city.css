@@ -17,9 +17,8 @@ body {
 }
 
 /* Zurück-Button */
-.header {
-  padding: 16px;
-  margin-bottom: -60px;
+header {
+  padding: 50px 0px 0px 50px;
 }
 .back-button img {
   width: 60px;
@@ -28,12 +27,14 @@ body {
 
 /* Info-Boxen über dem Stadtbild */
 .info-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4rem;
+  align-items: end; /* Alle Boxen am unteren Rand ausrichten */
   text-align: center;
   background-color: transparent;
+  padding: 2rem 1rem;
+  margin: 120px 15% 0 15%;
 }
 
 .info-box h2 {
@@ -42,12 +43,12 @@ body {
   padding: 10px 40px;  
   background-color: var(--lightgrey);
   margin-bottom: 4px;
-  margin-top: 120px;
+  margin-top: 0;
   border-radius: 100px;
 }
 
 .info-box p {
-  font-size: 20px;
+  font-size: 30px;
   color: var(--lightblue);
 }
 
@@ -59,28 +60,24 @@ body {
 }
 
 /* Zeit-Box */
-.time-box {
-  margin-top: -40px;
-}
-
-.time-box h2 {
+.time-box h1 {
   text-align: center;
   color: var(--lightblue);
-  font-size: 70px;
+  font-size: 80px;
+  margin-top: -320px;
 }
 
 .time-box p {
   text-align: center;
   color: var(--lightblue);
-  font-size: 10px;
+  font-size: 15px;
+  margin-top: -50px;
 }
 
 /* ===== Stadtbild ===== */
 .city-image {
   position: relative;
   text-align: center;
-  margin: 1rem 0;
-  overflow: hidden;
 }
 
 /* Tag/Nacht-Hintergrund */
@@ -99,7 +96,7 @@ body {
   max-width: 700px;
   height: auto;
   position: relative;
-  z-index: 2;
+  z-index: 10;
 }
 
 /* ===== Runder Tag/Nacht-Slider (zentriert hinter dem Bild) ===== */
@@ -128,11 +125,9 @@ body {
 /* Stadtinfos */
 .city-info {
   background-color: var(--bg-ground);
-  padding: 2rem 1rem;
   text-align: left;
+  padding: 100px 15% 50px 15%;
   margin-top: -40px;
-  padding-left: 10%;
-  padding-right: 10%;
   
 }
 
@@ -144,7 +139,7 @@ body {
 .city-info h1 {
   color: var(--titel-braun);
   margin-bottom: 1.5rem;
-  font-size: 36px;
+  font-size: 35px;
   
 }
 
@@ -156,17 +151,16 @@ body {
 
 /* Record-Pills untereinander */
 .record-list {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  min-width: fit-content;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
 }
 
 .record-item {
   background: var(--titel-braun);
   color: black;
   padding: 1rem 2rem;
+  margin-bottom: 20px;
   border-radius: 100px;
     text-align: center;
 }
@@ -186,11 +180,9 @@ body {
 }
 
 /* Beschreibung */
-.description {
-  margin: 0 auto;
+.description {;
   line-height: 1.5;
   font-size: 15px;
-  max-width: 800px;
 }
 
 /* Chart von chart.js */
