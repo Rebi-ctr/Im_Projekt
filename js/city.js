@@ -1,19 +1,27 @@
 console.log("Kolkata JS geladen");
 
 document.addEventListener("DOMContentLoaded", async () => {
-  const API_URL = "php/unload.php?city=Kolkata"; // gibt NUR Kolkata zurück
+  const API_URL = `php/unload.php?city=${encodeURIComponent(cityKey)}&format=full`;
 
   // HTML-Elemente abrufen
   const el = {
+    pageTitle: document.getElementById("pageTitle"),
+    city_name: document.getElementById("city_name"),
+    city_image: document.getElementById("city_image"),
+    description: document.getElementById("description"),
+
     pm10: document.getElementById("pm10"),
     time: document.getElementById("time"),
     date: document.getElementById("date"),
     temperature: document.getElementById("temperature"),
     weathercode: document.getElementById("weathercode"),
+    weathericon: document.getElementById("weathericon"),
+    
     record: document.getElementById("record"),
     average: document.getElementById("average"),
     lowest: document.getElementById("lowest"),
-    chartCanvas: document.getElementById("airQualityChartKolkata"),
+
+    chartCanvas: document.getElementById("airQualityChart"),
   };
 
   try {
