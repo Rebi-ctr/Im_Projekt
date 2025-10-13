@@ -12,6 +12,18 @@ function averagePm10(rows) {
     return { n, avg: n ? sum / n : 0 };
 }
 
+// --- Aktuellster Wert ---
+function currentPm10(rows) {
+    if (rows.length === 0) return null;
+
+    // Sortiere nach Datum (neueste zuerst)
+    const sorted = rows
+        .filter(r => r.datetimelocal && Number.isFinite(Number(r.pm10)))
+        .sort((a, b) => new Date(b.datetimelocal) - new Date(a.datetimelocal));
+
+    return sorted.length > 0 ? Number(sorted[0].pm10) : null;
+}
+
 // --- Minimal- und Maximalwerte ---
 function minPm10(rows) {
     const values = rows.map(r => Number(r.pm10)).filter(Number.isFinite);
@@ -37,12 +49,16 @@ async function renderCityAverage() {
     if (!res.ok) throw new Error(`HTTP ${res.status} für ${city}`);
     const data = await res.json();  // [{city, pm10, datetimelocal, ...}, ...]
 
-    // All-Time (keine Zeitfilter)
+    // All-Time 
     const { n, avg } = averagePm10(data);
     setText('#pm10-avg', avg.toFixed(2));
     setText('#pm10-n', String(n));
     const min = minPm10(data);
     const max = maxPm10(data);
+    const current = currentPm10(data);
+    setText('#pm10-min', min !== null ? min.toFixed(2) : '–');
+    setText('#pm10-max', max !== null ? max.toFixed(2) : '–');
+    setText('#pm10-current', current !== null ? current.toFixed(2) : '–');
 
     // (Optional) Falls die Übersichtstabelle auf der Seite bleiben soll,
     // kannst du hier die eine Zeile für diese Stadt füllen:
@@ -61,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setText('#pm10-avg', '–');
         setText('#pm10-min', '–');
         setText('#pm10-max', '–');
+        setText('#pm10-current', '–');
         setText('#pm10-n', '0');
         const tbody = document.querySelector('#avg-table tbody');
         if (tbody) tbody.innerHTML = `<tr><td colspan="5">Fehler beim Laden</td></tr>`;
