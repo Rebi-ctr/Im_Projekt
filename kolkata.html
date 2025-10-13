@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kolkata</title>
-  <link rel="stylesheet" href="css/kolkata.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/kolkata.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
 
@@ -74,11 +75,15 @@
       </div>
     </section>
 
-    <section class="chart">
-      <h1>AIR QUALITY IN THE PAST WEEK:</h1>
-      <canvas id="airQualityChartKolkata"></canvas>
-    </section>
-  </main>
-        <script src="js/kolkata.js"></script>
+
+  <section class="chart">
+    <h1>AIR QUALITY IN THE PAST WEEK:</h1>
+    <canvas id="airQualityChartKolkata"></canvas>
+  </section>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Dein JS -->
+  <script src="js/kolkata.js" defer></script>
 </body>
 </html>
