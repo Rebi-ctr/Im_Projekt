@@ -1,7 +1,9 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const API_URL = "php/unload.php";
-  const CITY = "Kolkata";
+console.log("Kolkata JS geladen");
 
+document.addEventListener("DOMContentLoaded", async () => {
+  const API_URL = "php/unload.php?city=Kolkata"; // gibt NUR Kolkata zurück
+
+  // HTML-Elemente abrufen
   const el = {
     pm10: document.getElementById("pm10"),
     time: document.getElementById("time"),
@@ -15,31 +17,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   try {
+    // 1️⃣ Daten abrufen
     const res = await fetch(API_URL);
     const data = await res.json();
 
-    console.log(data);
+    if (!Array.isArray(data) || data.length === 0) return;
 
-    // nur Daten für Kolkata
-    const cityData = data.filter(d => d.city.toLowerCase() === "kolkata");
+    // 2️⃣ Neuester Datensatz (der erste, wenn PHP sortiert DESC)
+    const latest = data[0];
 
-    if (cityData.length === 0) return;
-    
-    console.log(cityData);
+    console.log("Neuester Datensatz:", latest);
 
-    // neuester Datensatz
-    const latest = cityData[0];
+    // 3️⃣ Werte ins HTML einfügen
     el.pm10.textContent = `${latest.pm10} PM10 μg/m³`;
     el.temperature.textContent = `${latest.temperature}°C`;
     el.weathercode.textContent = mapWeatherCode(latest.weather_code);
 
-    // Zeit + Datum anzeigen
+    // 4️⃣ Datum & Zeit anzeigen
     const dateObj = new Date(latest.datetimelocal);
     el.time.textContent = dateObj.toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" });
     el.date.textContent = dateObj.toLocaleDateString("de-DE", { day: "2-digit", month: "long", year: "numeric" });
 
-    // Statistiken (Record, Average, Lowest)
-    const pm10Values = cityData.map(d => Number(d.pm10));
+    // 5️⃣ Statistiken berechnen (Record / Durchschnitt / Tiefstwert)
+    const pm10Values = data.map(d => Number(d.pm10));
     const record = Math.max(...pm10Values);
     const lowest = Math.min(...pm10Values);
     const average = Math.round(pm10Values.reduce((a, b) => a + b, 0) / pm10Values.length);
@@ -48,9 +48,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     el.average.textContent = `${average} PM10 μg/m³`;
     el.lowest.textContent = `${lowest} PM10 μg/m³`;
 
-    // Chart mit Chart.js
-    const labels = cityData.map(d => d.datetimelocal);
-    const values = cityData.map(d => d.pm10);
+    // 6️⃣ Chart zeichnen
+    const labels = data.map(d => d.datetimelocal);
+    const values = data.map(d => d.pm10);
 
     new Chart(el.chartCanvas, {
       type: "line",
@@ -66,14 +66,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       options: {
         responsive: true,
         plugins: { legend: { display: false } },
-        scales: {
-          y: { beginAtZero: true },
-        },
+        scales: { y: { beginAtZero: true } },
       },
     });
 
-  } catch (e) {
-    console.error("Fehler beim Laden der Daten:", e);
+  } catch (error) {
+    console.error("Fehler beim Laden der Daten:", error);
   }
 });
 
