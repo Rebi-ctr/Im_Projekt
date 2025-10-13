@@ -24,23 +24,30 @@ require_once 'config.php'; // Stellen Sie sicher, dass dies auf Ihre tatsächlic
 
 header('Content-Type: application/json; charset=utf-8');
 
+$city = $_GET['city'] ?? null;
+echo $city;
+
 try {
     // Erstellt eine neue PDO-Instanz mit der Konfiguration aus config.php
     $pdo = new PDO($dsn, $username, $password, $options);
 
     // Beispielhafte SQL-Abfrage (passen Sie diese an Ihre Bedürfnisse an)
     $sql = "SELECT 
-    a.city,
-    a.datetimelocal,
-    a.pm10,
-    a.pm2_5,
-    w.temperature,
-    w.weather_code
-FROM AirQuality AS a
-JOIN weather_data_india AS w
-    ON a.city = w.city
-    AND a.datetimelocal = w.datetimelocal
-ORDER BY a.city, a.datetimelocal DESC;";
+        a.city,
+        a.datetimelocal,
+        a.pm10,
+        a.pm2_5,
+        w.temperature,
+        w.weather_code
+    FROM AirQuality AS a
+    JOIN weather_data_india AS w
+        ON a.city = w.city
+        AND a.datetimelocal = w.datetimelocal
+    WHERE a.city = :city
+    ORDER BY a.city, a.datetimelocal DESC;";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindValue(':city', $city, PDO::PARAM_STR);
 
     // Bereitet die SQL-Anweisung vor
     $stmt = $pdo->prepare($sql);
