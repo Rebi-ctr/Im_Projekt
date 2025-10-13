@@ -12,6 +12,17 @@ function averagePm10(rows) {
     return { n, avg: n ? sum / n : 0 };
 }
 
+// --- Minimal- und Maximalwerte ---
+function minPm10(rows) {
+    const values = rows.map(r => Number(r.pm10)).filter(Number.isFinite);
+    return values.length ? Math.min(...values) : null;
+}
+
+function maxPm10(rows) {
+    const values = rows.map(r => Number(r.pm10)).filter(Number.isFinite);
+    return values.length ? Math.max(...values) : null;
+}
+
 // --- kleines Setter-Utility ---
 function setText(sel, text) {
     const el = document.querySelector(sel);
@@ -30,6 +41,8 @@ async function renderCityAverage() {
     const { n, avg } = averagePm10(data);
     setText('#pm10-avg', avg.toFixed(2));
     setText('#pm10-n', String(n));
+    const min = minPm10(data);
+    const max = maxPm10(data);
 
     // (Optional) Falls die Übersichtstabelle auf der Seite bleiben soll,
     // kannst du hier die eine Zeile für diese Stadt füllen:
@@ -37,7 +50,7 @@ async function renderCityAverage() {
     if (tbody) {
         tbody.innerHTML = '';
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${city}</td><td>${n}</td><td>${avg.toFixed(2)}</td>`;
+        tr.innerHTML = `<td>${city}</td><td>${n}</td><td>${avg.toFixed(2)}</td><td>${min.toFixed(2)}</td><td>${max.toFixed(2)}</td>`;
         tbody.appendChild(tr);
     }
 }
@@ -46,8 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderCityAverage().catch(err => {
         console.error(err);
         setText('#pm10-avg', '–');
+        setText('#pm10-min', '–');
+        setText('#pm10-max', '–');
         setText('#pm10-n', '0');
         const tbody = document.querySelector('#avg-table tbody');
-        if (tbody) tbody.innerHTML = `<tr><td colspan="3">Fehler beim Laden</td></tr>`;
+        if (tbody) tbody.innerHTML = `<tr><td colspan="5">Fehler beim Laden</td></tr>`;
     });
 });
