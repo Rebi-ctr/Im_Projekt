@@ -21,11 +21,9 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 
 require_once 'config.php'; // Stellen Sie sicher, dass dies auf Ihre tatsächliche Konfigurationsdatei verweist
-
-header('Content-Type: application/json; charset=utf-8');
+ header('Content-Type: application/json; charset=utf-8');
 
 $city = $_GET['city'] ?? null;
-echo $city;
 
 try {
     // Erstellt eine neue PDO-Instanz mit der Konfiguration aus config.php
@@ -50,11 +48,9 @@ try {
     $stmt->bindValue(':city', $city, PDO::PARAM_STR);
 
     // Bereitet die SQL-Anweisung vor
-    $stmt = $pdo->prepare($sql);
 
     // Führt die Anweisung aus
     $stmt->execute();
-
     // Holt alle Ergebnisse
     $results_airpollution = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
