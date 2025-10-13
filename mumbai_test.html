@@ -13,7 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
 </head>
 
-<body data-city="Kolkata">
+<body data-city="Mumbai">
     <!-- (Optional) Diese Übersichtstabelle brauchst du auf einer Stadt-Detailseite eigentlich nicht.
        Wenn du sie nicht willst: gesamten <section> Block löschen. -->
     <section class="infoWeatherAndAirQuality">
@@ -22,8 +22,10 @@
                 <h1>Mumbai</h1>
             </div>
             <div class="PMValue">
-                <h2>PM10: <span id="pm10-avg">–</span> μg/m³</h2><!-- dynamisch -->
-                <small>(n=<span id="pm10-n">0</span>)</small><!-- dynamisch -->
+                <h2>PM10: <span id="pm10-avg">–</span> μg/m³</h2>
+                <small>(n=<span id="pm10-n">0</span>)</small><br>
+                <small>Min: <span id="pm10-min">–</span> μg/m³</small><br>
+                <small>Max: <span id="pm10-max">–</span> μg/m³</small>
             </div>
         </div>
     </section>
