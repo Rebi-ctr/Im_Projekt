@@ -55,15 +55,10 @@ body {
 .moving-tuktuk {
     position: absolute;
     bottom: 50%;
-    /* oder z. B. 50% für mittig */
     right: -100%;
-    /* Start außerhalb der rechten Bildschirmkante */
-    animation: flyLeft 8s ease-out forwards;
-    /* 8s = Dauer, forwards = bleibt am Ende stehen */
+    animation: flyLeft 7s linear;
     pointer-events: none;
-    /* blockiert keine Klicks auf Buttons */
     z-index: 5;
-    /* über der Karte */
 }
 
 .moving-tuktuk img {
@@ -73,11 +68,11 @@ body {
 
 @keyframes flyLeft {
     0% {
-        transform: translateX(0);
+        transform: translateX(0vw);
     }
 
     100% {
-        transform: translateX(-120vw);
+        transform: translateX(-160vw);
     }
 }
 
