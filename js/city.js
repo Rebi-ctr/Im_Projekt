@@ -9,7 +9,7 @@ import { initDial } from './dial.js';
 function mapWeatherCode(code) {
   const map = {
     0: { label: "Klar", icon: "img/sun.png" },
-    1: { label: "Überwiegend klar", icon: "img/sun.png" },
+    1: { label: "Überwiegend klar", icon: "img/überwiegend.png" },
     2: { label: "Bewölkt", icon: "img/cloud.png" },
     3: { label: "Bedeckt", icon: "img/cloud.png" },
     45: { label: "Nebel", icon: "img/fog.png" },
