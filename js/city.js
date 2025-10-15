@@ -3,7 +3,9 @@ import { initDial } from './dial.js';
 
 // ===== HILFSFUNKTIONEN =====
 
-//Wettercode in Text und Icon umwandeln
+/**
+ * Wettercode in Text und Icon umwandeln
+ */
 function mapWeatherCode(code) {
   const map = {
     0: { label: "Klar", icon: "img/sun.png" },
@@ -23,8 +25,10 @@ function mapWeatherCode(code) {
   return map[code] || { label: `Wettercode ${code}`, icon: "img/cloud.png" };
 }
 
-//Passt die Hintergrundfarbe (Himmel) basierend auf der Uhrzeit an.
- function updateSkyColor(date) {
+/**
+ * Passt die Hintergrundfarbe (Himmel) basierend auf der Uhrzeit an.
+ */
+function updateSkyColor(date) {
   const hour = date.getHours();
   const min = date.getMinutes();
   const t = hour + min / 60; // z. B. 13.5 = 13:30 Uhr
@@ -65,8 +69,10 @@ function mapWeatherCode(code) {
   document.documentElement.style.setProperty("--bg-sky", color);
 }
 
-//UI-Helper: Zeit und Datum in DOM schreiben
- function setClockUI(date, el) {
+/**
+ * UI-Helper: Zeit und Datum in DOM schreiben
+ */
+function setClockUI(date, el) {
   if (el.time) {
     el.time.textContent = date.toLocaleTimeString("de-CH", { 
       hour: "2-digit", 
@@ -82,7 +88,9 @@ function mapWeatherCode(code) {
   }
 }
 
-//UI-Helper: Wetter- und Luftqualitätsdaten in DOM schreiben
+/**
+ * UI-Helper: Wetter- und Luftqualitätsdaten in DOM schreiben
+ */
 function setDataUI(entry, el) {
   if (!entry) {
     console.warn("Keine Daten für diesen Zeitpunkt verfügbar");
@@ -124,9 +132,12 @@ const snap15 = (date) => new Date(Math.round(date.getTime() / MS15) * MS15);
 function localKey(date) {
   return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())} `
        + `${pad2(date.getHours())}:${pad2(date.getMinutes())}:00`;
+}
 
-// Findet den passenden Datensatz für ein bestimmtes Datum/Zeit
-// Sucht zuerst exakten Match, dann den zeitlich nächstliegenden
+/**
+ * Findet den passenden Datensatz für ein bestimmtes Datum/Zeit
+ * Sucht zuerst exakten Match, dann den zeitlich nächstliegenden
+ */
 function findEntryForDateTime(series, targetDate) {
   if (!series || !series.length) return null;
 
@@ -169,7 +180,9 @@ function findEntryForDateTime(series, targetDate) {
   return best;
 }
 
-//Berechnet das Ziel-Datum basierend auf Dial-Position
+/**
+ * Berechnet das Ziel-Datum basierend auf Dial-Position
+ */
 function calculateTargetDate(baseDate, dateWithinDay, turns) {
   // Basis-Datum + Tage-Offset durch Drehungen
   const targetDate = addDays(baseDate, turns || 0);
