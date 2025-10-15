@@ -35,12 +35,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
     console.log("Lade Stadt-Infos für:", cityKey);
-    
+
     // === 1) ERSTE API-ABFRAGE: Stadt-Informationen ===
     const resInfo = await fetch(API_URL_Info);
     if (!resInfo.ok) throw new Error(`Info API HTTP ${resInfo.status}`);
     const meta = await resInfo.json();
-    
+
     console.log("Stadt-Infos geladen:", meta);
 
     // Stadt-Meta-Daten setzen
@@ -52,11 +52,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === 2) ZWEITE API-ABFRAGE: Wetter- und Luftqualitätsdaten ===
     console.log("Lade Zeitreihen-Daten für:", cityKey);
-    
+
     const resData = await fetch(API_URL_Data);
     if (!resData.ok) throw new Error(`Data API HTTP ${resData.status}`);
     const series = await resData.json();
-    
+
     console.log("Zeitreihen-Daten geladen:", series);
 
     // Prüfen ob Daten vorhanden sind
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === 3) AKTUELLE WERTE (neueste Messung) ===
     const latest = series[0]; // Neueste Messung (da DESC sortiert)
-    
+
     if (el.pm10) el.pm10.textContent = `${latest.pm10} PM10 μg/m³`;
     if (el.temperature) el.temperature.textContent = `${latest.temperature}°C`;
 
@@ -78,19 +78,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Datum und Zeit
     const dateObj = new Date(latest.datetimelocal);
-    if (el.time) el.time.textContent = dateObj.toLocaleTimeString("de-CH", { 
-      hour: "2-digit", 
-      minute: "2-digit" 
+    if (el.time) el.time.textContent = dateObj.toLocaleTimeString("de-CH", {
+      hour: "2-digit",
+      minute: "2-digit"
     });
-    if (el.date) el.date.textContent = dateObj.toLocaleDateString("de-CH", { 
-      day: "2-digit", 
-      month: "long", 
-      year: "numeric" 
+    if (el.date) el.date.textContent = dateObj.toLocaleDateString("de-CH", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
     });
 
     // === 4) STATISTIKEN (Record, Average, Lowest) ===
     const pm10Values = series.map(d => Number(d.pm10)).filter(n => Number.isFinite(n));
-    
+
     if (pm10Values.length > 0) {
       const record = Math.max(...pm10Values);
       const lowest = Math.min(...pm10Values);
@@ -103,15 +103,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === 5) CHART ERSTELLEN ===
     if (el.chartCanvas) {
-      // Daten für Chart formatieren
-      const labels = series.map(d => {
+      // Daten für Chart formatieren - Array umkehren für chronologische Reihenfolge
+      const reversedSeries = [...series].reverse();
+      
+      const labels = reversedSeries.map(d => {
         const date = new Date(d.datetimelocal);
-        return date.toLocaleDateString("de-CH", { 
-          day: "2-digit", 
-          month: "2-digit" 
+        return date.toLocaleDateString("de-CH", {
+          day: "2-digit",
+          month: "2-digit"
         });
       });
-      const values = series.map(d => Number(d.pm10));
+      const values = reversedSeries.map(d => Number(d.pm10));
 
       new Chart(el.chartCanvas, {
         type: "line",
@@ -129,15 +131,15 @@ document.addEventListener("DOMContentLoaded", async () => {
         },
         options: {
           responsive: true,
-          plugins: { 
+          plugins: {
             legend: { display: true },
             title: {
               display: true,
               text: `Luftqualität in ${meta.city}`
             }
           },
-          scales: { 
-            y: { 
+          scales: {
+            y: {
               beginAtZero: true,
               title: {
                 display: true,
@@ -153,13 +155,13 @@ document.addEventListener("DOMContentLoaded", async () => {
           },
         },
       });
-      
+
       console.log("Chart erfolgreich erstellt");
     }
 
   } catch (error) {
     console.error("Fehler beim Laden der Daten:", error);
-    
+
     // Benutzerfreundliche Fehlermeldung anzeigen
     if (el.description) {
       el.description.textContent = "Fehler beim Laden der Daten. Bitte versuchen Sie es später erneut.";

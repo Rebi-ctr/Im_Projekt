@@ -35,7 +35,6 @@ try {
      AND a.datetimelocal = w.datetimelocal
     WHERE a.city = :city
     ORDER BY a.datetimelocal DESC
-    LIMIT 100
   ");
   $stmtData->execute([':city' => $city]);
   $timeseries = $stmtData->fetchAll(PDO::FETCH_ASSOC);
