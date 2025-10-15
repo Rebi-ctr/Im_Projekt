@@ -52,6 +52,37 @@ body {
     font-size: 70px;
 }
 
+.moving-tuktuk {
+    position: absolute;
+    bottom: 50%;
+    /* oder z. B. 50% für mittig */
+    right: -100%;
+    /* Start außerhalb der rechten Bildschirmkante */
+    animation: flyLeft 8s ease-out forwards;
+    /* 8s = Dauer, forwards = bleibt am Ende stehen */
+    pointer-events: none;
+    /* blockiert keine Klicks auf Buttons */
+    z-index: 5;
+    /* über der Karte */
+}
+
+.moving-tuktuk img {
+    width: 800px;
+    height: auto;
+}
+
+@keyframes flyLeft {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-120vw);
+    }
+}
+
+
+
 /* ---------- City Buttons ---------- */
 
 .city-btn {
@@ -96,13 +127,12 @@ body {
     color: var(--brown-font);
     letter-spacing: .03em;
     opacity: 0;
-    transform: translateY(4px);
+    transform: translate(-50%, -50%) translateY(4px);
     transition: opacity .25s ease, transform .25s ease;
     white-space: nowrap;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) translateY(4px);
 }
 
 /* Hover-Effekt: Bubble heller, Grafik fadet raus, Label erscheint */
