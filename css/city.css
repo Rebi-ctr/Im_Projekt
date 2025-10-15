@@ -79,6 +79,7 @@ header {
   position: relative;
   text-align: center;
   justify-content: center;
+  margin-top: -80px;
 }
 
 /* ===== Runder Tag/Nacht-Slider (zentriert hinter dem Bild) ===== */
@@ -125,6 +126,7 @@ header {
   transition: transform 0.02s linear;
   pointer-events: auto; /* Ermöglicht Interaktionen */
   z-index: -1; /* Über dem Stadtbild */
+  margin-top: 120px;
 }
 
 .dial:active { 
@@ -159,7 +161,7 @@ header {
   background-color: var(--bg-ground);
   text-align: left;
   padding: 100px 15% 50px 15%;
-  margin-top: -40px;
+  margin-top: -80px;
   
 }
 
