@@ -1,5 +1,5 @@
 :root {
-  --bg-night: #001b1f;
+  --bg-sky: #001b1f; /* Start: Nacht */
   --bg-ground: #4E2A00;
   --lightgrey: #d9d9d9;
   --text-title: #7A282E;
@@ -12,7 +12,8 @@
 body {
   margin: 0;
   font-family: var(--font);
-  background-color: var(--bg-night);
+  background: linear-gradient(to bottom, var(--bg-sky), var(--bg-ground));
+  transition: background 1s ease, background-color 1s ease;
   color: var(--lightgrey);
 }
 
@@ -125,7 +126,7 @@ header {
   cursor: grab;
   transition: transform 0.02s linear;
   pointer-events: auto; /* Ermöglicht Interaktionen */
-  z-index: -1; /* Über dem Stadtbild */
+  z-index: 15; /* Über dem Stadtbild */
   margin-top: 120px;
 }
 

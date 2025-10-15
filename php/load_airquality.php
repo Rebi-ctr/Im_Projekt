@@ -2,7 +2,6 @@
 
 // --- 1. Transformations-Skript einbinden
 include 'transform_airquality.php';
-print_r($transformedData);
 
 // --- 2. Datenbankkonfiguration einbinden
 require_once 'config.php';
