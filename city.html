@@ -42,9 +42,16 @@
 
     <!-- Stadtbild mit Tag-Nacht-Slider -->
     <section class="city-image">
-        <div class="day-night-toggle">
-            <div class="slider"></div>
-         </div>
+
+      <div class="dial-wrap" id="dialWrap" tabindex="0" aria-label="Drehbarer Kreis">
+      
+      <!-- Optional: Fixpunkt/Marker oben -->
+      <div class="marker" aria-hidden="true"></div>
+
+      <!-- Deine Kreis-Grafik -->
+      <img id="dial" class="dial" src="img/Kreis.png" alt="Kreisgrafik" />
+    </div>
+
         <img id="city_image" src="" alt="Stadtbild">
     </section>
 
