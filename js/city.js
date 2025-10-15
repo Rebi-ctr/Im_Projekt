@@ -103,17 +103,24 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === 5) CHART ERSTELLEN ===
     if (el.chartCanvas) {
+      // 5 Tage bei 15-Minuten-Intervallen: 5 Tage * 24 Stunden * 4 Messungen/Stunde = 480 Datenpunkte
+      const chartData = series.slice(0, 380); // Ersten 120 Einträge (neueste 5 Tage)
+
       // Daten für Chart formatieren - Array umkehren für chronologische Reihenfolge
-      const reversedSeries = [...series].reverse();
-      
-      const labels = reversedSeries.map(d => {
+      const reversedSeries = [...chartData].reverse();
+
+      // Nur jeden 4. Datenpunkt für das Chart verwenden (alle Stunde)
+      const filteredData = reversedSeries.filter((d, index) => index % 4 === 0);
+
+      const labels = filteredData.map(d => {
         const date = new Date(d.datetimelocal);
         return date.toLocaleDateString("de-CH", {
           day: "2-digit",
           month: "2-digit"
         });
       });
-      const values = reversedSeries.map(d => Number(d.pm10));
+
+      const values = filteredData.map(d => Number(d.pm10));
 
       new Chart(el.chartCanvas, {
         type: "line",
@@ -135,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             legend: { display: true },
             title: {
               display: true,
-              text: `Luftqualität in ${meta.city}`
+              text: `Luftqualität in ${meta.city} (letzte 5 Tage)`
             }
           },
           scales: {
@@ -192,46 +199,46 @@ function mapWeatherCode(code) {
 // Kreis slider (Tag/Nacht)
 
 (() => {
-  const wrap   = document.getElementById('dialWrap');
-  const dial   = document.getElementById('dial');
+  const wrap = document.getElementById('dialWrap');
+  const dial = document.getElementById('dial');
 
 
   let dragging = false;
   let lastAngle = 0;   // [-180, 180]
-  let accAngle  = 0;   // akkumuliert, wächst endlos (kann positiv/negativ)
+  let accAngle = 0;   // akkumuliert, wächst endlos (kann positiv/negativ)
 
-  function getPointer(e){ return e.touches ? e.touches[0] : e; }
-  function center(node){
+  function getPointer(e) { return e.touches ? e.touches[0] : e; }
+  function center(node) {
     const r = node.getBoundingClientRect();
-    return { cx: r.left + r.width/2, cy: r.top + r.height/2 };
+    return { cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
   }
-  function angleFromEvent(e){
+  function angleFromEvent(e) {
     const p = getPointer(e);
-    const {cx, cy} = center(dial);
+    const { cx, cy } = center(dial);
     const dx = p.clientX - cx;
     const dy = p.clientY - cy;
-    return Math.atan2(dy, dx) * 180/Math.PI; // [-180, 180]
+    return Math.atan2(dy, dx) * 180 / Math.PI; // [-180, 180]
   }
-  function normalizeDelta(d){
+  function normalizeDelta(d) {
     if (d > 180) d -= 360;
     if (d < -180) d += 360;
     return d;
   }
-  function updateUI(){
+  function updateUI() {
     dial.style.transform = `rotate(${accAngle}deg)`;
-    
-  console.log(`Kreis gedreht: ${Math.round(accAngle)}°`);
+
+    console.log(`Kreis gedreht: ${Math.round(accAngle)}°`);
   }
 
   console.log("Kreis-Slider initialisiert");
 
   // Dragging
-  function onDown(e){
+  function onDown(e) {
     e.preventDefault();
     dragging = true;
     lastAngle = angleFromEvent(e);
   }
-  function onMove(e){
+  function onMove(e) {
     if (!dragging) return;
     const a = angleFromEvent(e);
     const delta = normalizeDelta(a - lastAngle);
@@ -239,14 +246,14 @@ function mapWeatherCode(code) {
     lastAngle = a;
     updateUI();
   }
-  function onUp(){ dragging = false; }
+  function onUp() { dragging = false; }
 
   wrap.addEventListener('mousedown', onDown);
   window.addEventListener('mousemove', onMove);
   window.addEventListener('mouseup', onUp);
 
-  wrap.addEventListener('touchstart', onDown, {passive:false});
-  window.addEventListener('touchmove', onMove, {passive:false});
+  wrap.addEventListener('touchstart', onDown, { passive: false });
+  window.addEventListener('touchmove', onMove, { passive: false });
   window.addEventListener('touchend', onUp);
 
   // Mausrad (fein)
@@ -254,14 +261,14 @@ function mapWeatherCode(code) {
     e.preventDefault();
     accAngle += -e.deltaY * 0.3; // nach oben => +, Feinfaktor anpassen
     updateUI();
-  }, { passive:false });
+  }, { passive: false });
 
   // Tastatursteuerung
   wrap.addEventListener('keydown', (e) => {
     const step = e.shiftKey ? 15 : 3; // Shift = gröber
-    if (e.key === 'ArrowRight' || e.key === 'ArrowUp'){ accAngle += step; updateUI(); }
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowDown'){ accAngle -= step; updateUI(); }
-    if (e.key.toLowerCase() === 'r' || e.key === 'Home'){ accAngle = 0; updateUI(); }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') { accAngle += step; updateUI(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { accAngle -= step; updateUI(); }
+    if (e.key.toLowerCase() === 'r' || e.key === 'Home') { accAngle = 0; updateUI(); }
   });
 
   // Initial
