@@ -34,7 +34,7 @@ header {
   text-align: center;
   background-color: transparent;
   padding: 2rem 1rem;
-  margin: 120px 15% 0 15%;
+  margin: 120px 10% 0 10%;
 }
 
 .info-box h2 {
@@ -78,16 +78,31 @@ header {
 .city-image {
   position: relative;
   text-align: center;
+  justify-content: center;
 }
 
-/* Tag/Nacht-Hintergrund */
-.city-image::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, var(--sky-day), var(--sky-night));
-  z-index: 0;
-  transition: background 1s ease-in-out;
+/* ===== Runder Tag/Nacht-Slider (zentriert hinter dem Bild) ===== */
+.dial-wrap {
+  position: absolute; /* Absolut positioniert innerhalb von .city-image */
+  left: 50%; /* Horizontal zentriert */
+  top: 30%; /* Vertikal zentriert */
+  transform: translate(-50%, -50%); /* Zentriert den Kreis perfekt */
+  width: 550px; /* Feste Breite statt 40% */
+  height: 550px; /* Feste Höhe statt 40% */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  outline: none;
+
+
+/* CSS MASKE - macht den Kreis nur dort sichtbar wo KEIN Stadtbild ist */
+  -webkit-mask: 
+    radial-gradient(circle at center, transparent 0%, transparent 40%, black 45%);
+  mask: 
+    radial-gradient(circle at center, transparent 0%, transparent 40%, black 45%);
 }
 
 /* Das Stadtbild selbst */
@@ -96,30 +111,47 @@ header {
   max-width: 700px;
   height: auto;
   position: relative;
-  z-index: 10;
+  z-index: 10; /* Über dem Kreis */
+  pointer-events: none; /* Verhindert, dass das Bild Mausereignisse abfängt */
 }
 
-/* ===== Runder Tag/Nacht-Slider (zentriert hinter dem Bild) ===== */
-.day-night-toggle {
+/* Der drehbare Kreis */
+.dial {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  will-change: transform;
+  cursor: grab;
+  transition: transform 0.02s linear;
+  pointer-events: auto; /* Ermöglicht Interaktionen */
+  z-index: -1; /* Über dem Stadtbild */
+}
+
+.dial:active { 
+  cursor: grabbing; 
+}
+
+/* Optionaler Marker oben */
+.marker {
   position: absolute;
-  top: 50%;
+  top: 20px;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 520px;
-  height: 520px;
-  background: radial-gradient(circle at 30% 30%, #FFD700, #FFA500);
-  border-radius: 50%;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
-  z-index: -4;
-  transition: all 0.5s ease;
-  pointer-events: none; /* Wichtig: verhindert, dass der Kreis das Bild blockiert */
+  transform: translateX(-50%);
+  width: 0; 
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 12px solid var(--lightblue); /* Verwende eine definierte Farbe */
+  filter: drop-shadow(0 1px 0 #0001);
+  z-index: 6;
 }
 
-/* Zustand: Nacht (per Hover – Demo) */
-.city-image:hover .day-night-toggle {
-  background: radial-gradient(circle at 70% 70%, #C0F6FF, #001B1F);
-  box-shadow: 0 0 40px rgba(0, 200, 255, 0.4);
+/* Tastaturfokus */
+.dial-wrap:focus-visible { 
+  outline: 3px solid var(--lightblue); 
+  outline-offset: 6px; 
 }
+
 
 
 /* Stadtinfos */
@@ -180,7 +212,7 @@ header {
 }
 
 /* Beschreibung */
-.description {;
+.description {
   line-height: 1.5;
   font-size: 15px;
 }
@@ -197,7 +229,7 @@ header {
 .chart h1 {
   color: var(--titel-braun);
   margin-bottom: 1.5rem;
-  font-size: 36px;
+  font-size: 35px;
 }
 
 /* Responsive */

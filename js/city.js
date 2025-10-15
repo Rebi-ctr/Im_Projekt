@@ -186,3 +186,82 @@ function mapWeatherCode(code) {
   };
   return map[code] || { label: `Wettercode ${code}`, icon: "img/cloud.png" };
 }
+
+// Kreis slider (Tag/Nacht)
+
+(() => {
+  const wrap   = document.getElementById('dialWrap');
+  const dial   = document.getElementById('dial');
+
+
+  let dragging = false;
+  let lastAngle = 0;   // [-180, 180]
+  let accAngle  = 0;   // akkumuliert, wächst endlos (kann positiv/negativ)
+
+  function getPointer(e){ return e.touches ? e.touches[0] : e; }
+  function center(node){
+    const r = node.getBoundingClientRect();
+    return { cx: r.left + r.width/2, cy: r.top + r.height/2 };
+  }
+  function angleFromEvent(e){
+    const p = getPointer(e);
+    const {cx, cy} = center(dial);
+    const dx = p.clientX - cx;
+    const dy = p.clientY - cy;
+    return Math.atan2(dy, dx) * 180/Math.PI; // [-180, 180]
+  }
+  function normalizeDelta(d){
+    if (d > 180) d -= 360;
+    if (d < -180) d += 360;
+    return d;
+  }
+  function updateUI(){
+    dial.style.transform = `rotate(${accAngle}deg)`;
+    
+  console.log(`Kreis gedreht: ${Math.round(accAngle)}°`);
+  }
+
+  console.log("Kreis-Slider initialisiert");
+
+  // Dragging
+  function onDown(e){
+    e.preventDefault();
+    dragging = true;
+    lastAngle = angleFromEvent(e);
+  }
+  function onMove(e){
+    if (!dragging) return;
+    const a = angleFromEvent(e);
+    const delta = normalizeDelta(a - lastAngle);
+    accAngle += delta;
+    lastAngle = a;
+    updateUI();
+  }
+  function onUp(){ dragging = false; }
+
+  wrap.addEventListener('mousedown', onDown);
+  window.addEventListener('mousemove', onMove);
+  window.addEventListener('mouseup', onUp);
+
+  wrap.addEventListener('touchstart', onDown, {passive:false});
+  window.addEventListener('touchmove', onMove, {passive:false});
+  window.addEventListener('touchend', onUp);
+
+  // Mausrad (fein)
+  wrap.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    accAngle += -e.deltaY * 0.3; // nach oben => +, Feinfaktor anpassen
+    updateUI();
+  }, { passive:false });
+
+  // Tastatursteuerung
+  wrap.addEventListener('keydown', (e) => {
+    const step = e.shiftKey ? 15 : 3; // Shift = gröber
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp'){ accAngle += step; updateUI(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowDown'){ accAngle -= step; updateUI(); }
+    if (e.key.toLowerCase() === 'r' || e.key === 'Home'){ accAngle = 0; updateUI(); }
+  });
+
+  // Initial
+  updateUI();
+})();
