@@ -1,27 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>India Air Quality Map</title>
+
+    <!-- Bestehendes Basis-Stylesheet NICHT entfernen -->
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
-    <section>
-        <h1>Städte Auswahl</h1>
-        <a href="city.html?city=Kolkata">Kolkata</a>
-        <a href="city.html?city=Mumbai">Mumbai</a>
-        <a href="city.html?city=Delhi">Delhi</a>
-        <a href="city.html?city=Chennai">Chennai</a>
-        <a href="city.html?city=Bangalore">Bangalore</a>
+    <main class="home">
+        <section class="hero">
+            <!-- Die Karte als Hintergrund – Bild wird in CSS gesetzt -->
+            <h1 class="title">
+                <span>INDIA</span>
+                <span>AIR QUALITY</span>
+                <span>MAP</span>
+            </h1>
 
-    </section>
+            <div class="MapIndia">
+                <img src="img/IndiaMapLocation.svg" alt="Karte von Indien">
+            </div>
 
-    <canvas id="airQualityChart"></canvas>
-    <script src="js/index.js"></script>
+            <a class="city-btn delhi" href="city.html?city=Delhi" aria-label="Delhi">
+                <span class="bubble">
+                    <img src="img/Delhi.png" alt="" loading="lazy">
+                    <span class="label">DELHI</span>
+                </span>
+            </a>
+
+            <a class="city-btn kolkata" href="city.html?city=Kolkata" aria-label="Kolkata">
+                <span class="bubble">
+                    <img src="img/Kolkata.png" alt="" loading="lazy">
+                    <span class="label">KOLKATA</span>
+                </span>
+            </a>
+
+            <a class="city-btn mumbai" href="city.html?city=Mumbai" aria-label="Mumbai">
+                <span class="bubble">
+                    <img src="img/Mumbai.png" alt="" loading="lazy">
+                    <span class="label">MUMBAI</span>
+                </span>
+            </a>
+
+            <a class="city-btn chennai" href="city.html?city=Chennai" aria-label="Chennai">
+                <span class="bubble">
+                    <img src="img/Chennai.png" alt="" loading="lazy">
+                    <span class="label">CHENNAI</span>
+                </span>
+            </a>
+
+            <a class="city-btn bangalore" href="city.html?city=Bangalore" aria-label="Bangalore">
+                <span class="bubble">
+                    <img src="img/Bangalore.png" alt="" loading="lazy">
+                    <span class="label">BANGALORE</span>
+                </span>
+            </a>
+        </section>
+    </main>
 </body>
 
 </html>

@@ -1,0 +1,148 @@
+:root {
+    --brown-font: #DFBCA6;
+    --blue-start: #092529;
+    --font: "Cormorant Garamond", serif;
+    --bubble-bg: #2b5162;
+    /* Blauer Button (normal) */
+    --bubble-bg-hover: #446b7c;
+    /* Heller auf Hover */
+    --page-max: 1200px;
+
+}
+
+body {
+    margin: 0;
+    font-family: var(--font);
+    background-color: var(--blue-start);
+    color: var(--brown-font);
+}
+
+
+
+/* Layout der Startseite */
+.home {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+
+}
+
+.hero {
+    position: relative;
+}
+
+.MapIndia {
+    margin-top: -250px;
+}
+
+/* Titel rechts, wie im Design */
+.title {
+    position: absolute;
+    right: 1%;
+    top: 53%;
+    text-align: center;
+    letter-spacing: 5px;
+    font-family: var(--font);
+    color: var(--brown-font);
+    font-weight: 500;
+}
+
+.title span {
+    display: block;
+    font-size: 70px;
+}
+
+/* ---------- City Buttons ---------- */
+
+.city-btn {
+    position: absolute;
+    text-decoration: none;
+    /* Klickfläche – nur die „Bubble“ sichtbar */
+    width: 200px;
+    height: 80px;
+}
+
+.city-btn .bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 100%;
+    padding: 10px 18px;
+    border-radius: 999px;
+    background: var(--bubble-bg);
+    transition: background-color .25s ease;
+    box-shadow: 0 8px 20px rgb(0 0 0 / 0.25);
+    overflow: hidden;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* Stadtgrafik */
+.city-btn img {
+    height: 70px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 2px rgb(0 0 0 / .25));
+    transition: opacity .25s ease;
+    flex-shrink: 0;
+}
+
+/* Label ist zunächst unsichtbar */
+.city-btn .label {
+    font-family: var(--font);
+    font-size: clamp(18px, 2.6vw, 28px);
+    color: var(--brown-font);
+    letter-spacing: .03em;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity .25s ease, transform .25s ease;
+    white-space: nowrap;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) translateY(4px);
+}
+
+/* Hover-Effekt: Bubble heller, Grafik fadet raus, Label erscheint */
+.city-btn:hover .bubble {
+    background: var(--bubble-bg-hover);
+}
+
+.city-btn:hover img {
+    opacity: 0;
+}
+
+.city-btn:hover .label {
+    opacity: 1;
+    transform: translate(-50%, -50%) translateY(0);
+}
+
+/* ---------- Positionen (pro Stadt an Karte angepasst) ---------- */
+/* Tipp: Feinjustierung per Prozent, bis es für deine Karte passt */
+
+.delhi {
+    left: 30%;
+    top: 18%;
+}
+
+.kolkata {
+    left: 53%;
+    top: 24%;
+}
+
+.mumbai {
+    left: 18%;
+    top: 42%;
+}
+
+.chennai {
+    left: 44%;
+    top: 80%;
+}
+
+.bangalore {
+    left: 8%;
+    top: 72%;
+}
