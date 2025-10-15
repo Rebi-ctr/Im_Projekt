@@ -35,12 +35,12 @@ function updateSkyColor(date) {
 
   // Definiere wichtige Zeitpunkte des Tages
   const keyframes = [
-    { time: 0,   color: [0, 20, 31] },    // Mitternacht
-    { time: 5,   color: [80, 100, 150] }, // Morgendämmerung
-    { time: 8,   color: [79, 195, 247] }, // Tag
-    { time: 17,  color: [255, 182, 161] },// Abend
-    { time: 20,  color: [10, 30, 70] },   // Nachtbeginn
-    { time: 24,  color: [0, 20, 31] }     // zurück zu Mitternacht
+    { time: 0, color: [0, 20, 31] },    // Mitternacht
+    { time: 5, color: [80, 100, 150] }, // Morgendämmerung
+    { time: 8, color: [79, 195, 247] }, // Tag
+    { time: 17, color: [255, 182, 161] },// Abend
+    { time: 20, color: [10, 30, 70] },   // Nachtbeginn
+    { time: 24, color: [0, 20, 31] }     // zurück zu Mitternacht
   ];
 
   // Finde die zwei Keyframes, zwischen denen wir uns befinden
@@ -74,16 +74,16 @@ function updateSkyColor(date) {
  */
 function setClockUI(date, el) {
   if (el.time) {
-    el.time.textContent = date.toLocaleTimeString("de-CH", { 
-      hour: "2-digit", 
-      minute: "2-digit" 
+    el.time.textContent = date.toLocaleTimeString("de-CH", {
+      hour: "2-digit",
+      minute: "2-digit"
     });
   }
   if (el.date) {
-    el.date.textContent = date.toLocaleDateString("de-CH", { 
-      day: "2-digit", 
-      month: "long", 
-      year: "numeric" 
+    el.date.textContent = date.toLocaleDateString("de-CH", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
     });
   }
 }
@@ -102,7 +102,7 @@ function setDataUI(entry, el) {
 
   if (el.pm10) el.pm10.textContent = `${entry.pm10} PM10 μg/m³`;
   if (el.temperature) el.temperature.textContent = `${entry.temperature}°C`;
-  
+
   const wc = mapWeatherCode(Number(entry.weather_code));
   if (el.weather_icon) el.weather_icon.src = wc.icon;
 }
@@ -131,7 +131,7 @@ const snap15 = (date) => new Date(Math.round(date.getTime() / MS15) * MS15);
  */
 function localKey(date) {
   return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())} `
-       + `${pad2(date.getHours())}:${pad2(date.getMinutes())}:00`;
+    + `${pad2(date.getHours())}:${pad2(date.getMinutes())}:00`;
 }
 
 /**
@@ -161,7 +161,7 @@ function findEntryForDateTime(series, targetDate) {
     try {
       const entryDate = new Date(entry.datetimelocal);
       const diff = Math.abs(entryDate.getTime() - snapped.getTime());
-      
+
       if (diff < bestDiff) {
         best = entry;
         bestDiff = diff;
@@ -172,7 +172,7 @@ function findEntryForDateTime(series, targetDate) {
   }
 
   if (best) {
-    console.log(`Nächstliegender Datensatz gefunden (${Math.round(bestDiff/60000)}min Unterschied):`, best);
+    console.log(`Nächstliegender Datensatz gefunden (${Math.round(bestDiff / 60000)}min Unterschied):`, best);
   } else {
     console.warn("Kein passender Datensatz gefunden");
   }
@@ -186,13 +186,13 @@ function findEntryForDateTime(series, targetDate) {
 function calculateTargetDate(baseDate, dateWithinDay, turns) {
   // Basis-Datum + Tage-Offset durch Drehungen
   const targetDate = addDays(baseDate, turns || 0);
-  
+
   // Zeit vom dateWithinDay übernehmen
   targetDate.setHours(dateWithinDay.getHours());
   targetDate.setMinutes(dateWithinDay.getMinutes());
   targetDate.setSeconds(0);
   targetDate.setMilliseconds(0);
-  
+
   return targetDate;
 }
 
@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const resInfo = await fetch(API_URL_Info);
     if (!resInfo.ok) throw new Error(`Info API HTTP ${resInfo.status}`);
     const meta = await resInfo.json();
-    
+
     console.log("Stadt-Infos geladen:", meta);
 
     // Meta-Daten setzen
@@ -258,7 +258,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const resData = await fetch(API_URL_Data);
     if (!resData.ok) throw new Error(`Data API HTTP ${resData.status}`);
     series = await resData.json();
-    
+
     console.log("Zeitreihen-Daten geladen:", series.length, "Einträge");
 
     if (!Array.isArray(series) || !series.length) {
@@ -266,10 +266,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // === STARTZUSTAND: AKTUELLE ZEIT ===
-    const now = new Date();
-    const baseDate = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // Heutige Mitternacht
-    const startMinutes = now.getHours() * 60 + Math.round(now.getMinutes() / 15) * 15; // Aktuelle Zeit in Minuten
+    // === STARTZUSTAND: AKTUELLE ZEIT IN GMT+5:30 (Indien) ===
+    const tz = "Asia/Kolkata";
+    const now = new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
+    const baseDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startMinutes = now.getHours() * 60 + Math.round(now.getMinutes() / 15) * 15;
 
     // Aktuelle Daten anzeigen
     const currentEntry = findEntryForDateTime(series, now);
@@ -280,7 +281,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const pm10Values = series.map(d => Number(d.pm10)).filter(Number.isFinite);
     if (pm10Values.length) {
       if (el.record) el.record.textContent = `${Math.max(...pm10Values)} PM10 μg/m³`;
-      if (el.average) el.average.textContent = `${Math.round(pm10Values.reduce((a,b)=>a+b,0)/pm10Values.length)} PM10 μg/m³`;
+      if (el.average) el.average.textContent = `${Math.round(pm10Values.reduce((a, b) => a + b, 0) / pm10Values.length)} PM10 μg/m³`;
       if (el.lowest) el.lowest.textContent = `${Math.min(...pm10Values)} PM10 μg/m³`;
     }
 
@@ -288,7 +289,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (el.chartCanvas) {
       console.log("Erstelle Chart...");
       const chartData = series.slice(0, 480).reverse().filter((_, i) => i % 4 === 0); // Alle 4. Datenpunkt = stündlich
-      
+
       new Chart(el.chartCanvas, {
         type: "line",
         data: {
@@ -320,11 +321,11 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
           },
           scales: {
-            y: { 
-              beginAtZero: true, 
+            y: {
+              beginAtZero: true,
               title: { display: true, text: 'PM10 μg/m³' }
             },
-            x: { 
+            x: {
               title: { display: true, text: 'Datum/Zeit' }
             }
           }
@@ -336,35 +337,35 @@ document.addEventListener("DOMContentLoaded", async () => {
     // === DIAL INITIALISIEREN ===
     const wrap = document.getElementById("dialWrap");
     const dial = document.getElementById("dial");
-    
+
     if (wrap && dial) {
       console.log("Initialisiere Dial...");
-      
-  
-  initDial({
-  wrap,
-  dial,
-  baseDate,
-  startMinutes,
-  snapMinutes: 15,
 
-  // Wird beim Drehen ausgeführt
-  onChange: (dateWithinDay, turns) => {
-    const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
-    setClockUI(targetDate, el);
 
-    // 🌤 Hintergrund anpassen
-    updateSkyColor(dateWithinDay);
-  },
+      initDial({
+        wrap,
+        dial,
+        baseDate,
+        startMinutes,
+        snapMinutes: 15,
 
-  // Wird nach dem Loslassen ausgeführt
-  onIdle: (dateWithinDay, turns) => {
-    const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
-    const entry = findEntryForDateTime(series, targetDate);
-    setDataUI(entry, el);
-  }
-});
-      
+        // Wird beim Drehen ausgeführt
+        onChange: (dateWithinDay, turns) => {
+          const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
+          setClockUI(targetDate, el);
+
+          // 🌤 Hintergrund anpassen
+          updateSkyColor(dateWithinDay);
+        },
+
+        // Wird nach dem Loslassen ausgeführt
+        onIdle: (dateWithinDay, turns) => {
+          const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
+          const entry = findEntryForDateTime(series, targetDate);
+          setDataUI(entry, el);
+        }
+      });
+
       console.log("Dial erfolgreich initialisiert");
     } else {
       console.warn("Dial-Elemente nicht gefunden");
