@@ -120,7 +120,7 @@ function updateTuktuks(pm10) {
     img.setAttribute("aria-hidden", "true");
 
     // Animation Timing
-    const baseDuration = 12; // Sekunden
+    const baseDuration = 20; // Sekunden
     const durationVariance = Math.random() * 6; // 0-6s Varianz
     const duration = Math.max(6, baseDuration - Math.min(4, value / 2) + durationVariance);
 
@@ -130,16 +130,20 @@ function updateTuktuks(pm10) {
     // CSS Eigenschaften setzen
     img.style.animationDuration = `${duration}s`;
     img.style.animationDelay = `${delay}s`;
-    img.style.left = '-150px'; // sicherstellen, dass Startposition gesetzt ist
     
     // Layer-spezifische Animationen
     if (layerClass === "layer-2") {
-      img.style.animationName = "tuktuk-drive-layer2";
+      img.style.animationName = "tuktuk-bounce-layer2";
     } else if (layerClass === "layer-3") {
-      img.style.animationName = "tuktuk-drive-layer3";
+      img.style.animationName = "tuktuk-bounce-layer3";
     } else {
-      img.style.animationName = "tuktuk-drive";
+      img.style.animationName = "tuktuk-bounce";
     }
+
+    img.style.animationTimingFunction = "linear";
+    img.style.animationIterationCount = "infinite";
+    img.style.animationDirection = "alternate";
+    img.style.animationFillMode = "both";
 
     track.appendChild(img);
     

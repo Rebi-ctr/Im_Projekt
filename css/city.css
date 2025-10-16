@@ -170,24 +170,25 @@ header {
   margin-top: 20px; /* Mehr Abstand zum Stadtbild */
   overflow: hidden;
   pointer-events: none;
+  background-color: #C0F6FF;
 }
 
 /* Einzelnes TukTuk */
 .tuktuk {
   position: absolute;
-  bottom: 8px;            /* klare Startposition links außerhalb */
+  bottom: 8px;
+  left: 0;
   width: 80px;
   height: auto;
 
-  /* Animation Eigenschaften - Standard (kann per JS überschrieben werden) */
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-fill-mode: none;
+  animation-direction: alternate; /* wichtig! fährt hin & zurück */
   will-change: left, transform;
 
   opacity: 0.95;
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
-  z-index: 25; /* Über allem anderen */
+  z-index: 25;
 }
 
 /* Layer-spezifische Positions / z-index - KEIN transform hier! */
@@ -213,22 +214,27 @@ header {
   width: 60px; 
 }
 
-/* Animation: links -> rechts mit optionaler Skalierung in Keyframes */
-@keyframes tuktuk-drive {
-  0%   { left: -150px; transform: translateZ(0) scale(1); }
-  100% { left: calc(100% + 150px); transform: translateZ(0) scale(1); }
+/* TukTuk fährt von links nach rechts und wieder zurück */
+@keyframes tuktuk-bounce {
+  0%   { left: 0;   transform: translateZ(0) scaleX(1) scale(1); }
+  49.999% { transform: translateZ(0) scaleX(1) scale(1); } /* fährt rechts */
+  50%  { left: calc(100% - 100px); transform: translateZ(0) scaleX(-1) scale(1); } /* Richtung umdrehen + Spiegeln */
+  100% { left: 0;   transform: translateZ(0) scaleX(-1) scale(1); } /* zurück nach links */
 }
 
-/* Layer-2: leicht kleiner */
-@keyframes tuktuk-drive-layer2 {
-  0%   { left: -150px; transform: translateZ(0) scale(0.95); }
-  100% { left: calc(100% + 150px); transform: translateZ(0) scale(0.95); }
+/* Layer 2 & 3 – leicht kleiner */
+@keyframes tuktuk-bounce-layer2 {
+  0%   { left: 0;   transform: translateZ(0) scaleX(1) scale(0.95); }
+  49.999% { transform: translateZ(0) scaleX(1) scale(0.95); }
+  50%  { left: calc(100% - 100px); transform: translateZ(0) scaleX(-1) scale(0.95); }
+  100% { left: 0;   transform: translateZ(0) scaleX(-1) scale(0.95); }
 }
 
-/* Layer-3: noch kleiner */
-@keyframes tuktuk-drive-layer3 {
-  0%   { left: -150px; transform: translateZ(0) scale(0.9); }
-  100% { left: calc(100% + 150px); transform: translateZ(0) scale(0.9); }
+@keyframes tuktuk-bounce-layer3 {
+  0%   { left: 0;   transform: translateZ(0) scaleX(1) scale(0.9); }
+  49.999% { transform: translateZ(0) scaleX(1) scale(0.9); }
+  50%  { left: calc(100% - 100px); transform: translateZ(0) scaleX(-1) scale(0.9); }
+  100% { left: 0;   transform: translateZ(0) scaleX(-1) scale(0.9); }
 }
 
 
