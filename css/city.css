@@ -1,5 +1,6 @@
 :root {
-  --bg-sky: #001b1f; /* Start: Nacht */
+  --bg-sky: #001b1f;
+  /* Start: Nacht */
   --bg-ground: #4E2A00;
   --lightgrey: #d9d9d9;
   --text-title: #7A282E;
@@ -19,11 +20,12 @@ body {
 
 /* Zurück-Button */
 header {
-  padding: 50px 0px 0px 50px;
+  padding: 30px 0px 0px 30px;
 }
+
 .back-button img {
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
 }
 
 /* Info-Boxen über dem Stadtbild */
@@ -31,7 +33,8 @@ header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 4rem;
-  align-items: end; /* Alle Boxen am unteren Rand ausrichten */
+  align-items: end;
+  /* Alle Boxen am unteren Rand ausrichten */
   text-align: center;
   background-color: transparent;
   padding: 2rem 1rem;
@@ -41,7 +44,7 @@ header {
 .info-box h2 {
   font-size: 35px;
   color: var(--text-title);
-  padding: 10px 40px;  
+  padding: 10px 40px;
   background-color: var(--lightgrey);
   margin-bottom: 4px;
   margin-top: 0;
@@ -85,12 +88,18 @@ header {
 
 /* ===== Runder Tag/Nacht-Slider (zentriert hinter dem Bild) ===== */
 .dial-wrap {
-  position: absolute; /* Absolut positioniert innerhalb von .city-image */
-  left: 50%; /* Horizontal zentriert */
-  top: 30%; /* Vertikal zentriert */
-  transform: translate(-50%, -50%); /* Zentriert den Kreis perfekt */
-  width: 550px; /* Feste Breite statt 40% */
-  height: 550px; /* Feste Höhe statt 40% */
+  position: absolute;
+  /* Absolut positioniert innerhalb von .city-image */
+  left: 50%;
+  /* Horizontal zentriert */
+  top: 30%;
+  /* Vertikal zentriert */
+  transform: translate(-50%, -50%);
+  /* Zentriert den Kreis perfekt */
+  width: 550px;
+  /* Feste Breite statt 40% */
+  height: 550px;
+  /* Feste Höhe statt 40% */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,10 +109,10 @@ header {
   outline: none;
 
 
-/* CSS MASKE - macht den Kreis nur dort sichtbar wo KEIN Stadtbild ist */
-  -webkit-mask: 
+  /* CSS MASKE - macht den Kreis nur dort sichtbar wo KEIN Stadtbild ist */
+  -webkit-mask:
     radial-gradient(circle at center, transparent 0%, transparent 40%, black 45%);
-  mask: 
+  mask:
     radial-gradient(circle at center, transparent 0%, transparent 40%, black 45%);
 }
 
@@ -113,8 +122,10 @@ header {
   max-width: 700px;
   height: auto;
   position: relative;
-  z-index: 10; /* Über dem Kreis */
-  pointer-events: none; /* Verhindert, dass das Bild Mausereignisse abfängt */
+  z-index: 10;
+  /* Über dem Kreis */
+  pointer-events: none;
+  /* Verhindert, dass das Bild Mausereignisse abfängt */
 }
 
 /* Der drehbare Kreis */
@@ -125,13 +136,15 @@ header {
   will-change: transform;
   cursor: grab;
   transition: transform 0.02s linear;
-  pointer-events: auto; /* Ermöglicht Interaktionen */
-  z-index: 15; /* Über dem Stadtbild */
+  pointer-events: auto;
+  /* Ermöglicht Interaktionen */
+  z-index: 15;
+  /* Über dem Stadtbild */
   margin-top: 120px;
 }
 
-.dial:active { 
-  cursor: grabbing; 
+.dial:active {
+  cursor: grabbing;
 }
 
 /* Optionaler Marker oben */
@@ -140,19 +153,20 @@ header {
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 0; 
+  width: 0;
   height: 0;
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
-  border-bottom: 12px solid var(--lightblue); /* Verwende eine definierte Farbe */
+  border-bottom: 12px solid var(--lightblue);
+  /* Verwende eine definierte Farbe */
   filter: drop-shadow(0 1px 0 #0001);
   z-index: 6;
 }
 
 /* Tastaturfokus */
-.dial-wrap:focus-visible { 
-  outline: 3px solid var(--lightblue); 
-  outline-offset: 6px; 
+.dial-wrap:focus-visible {
+  outline: 3px solid var(--lightblue);
+  outline-offset: 6px;
 }
 
 
@@ -163,19 +177,19 @@ header {
   text-align: left;
   padding: 100px 15% 50px 15%;
   margin-top: -80px;
-  
+
 }
 
 .city-info-content {
-    display: flex;
-    gap: 50px;
+  display: flex;
+  gap: 50px;
 }
 
 .city-info h1 {
   color: var(--titel-braun);
   margin-bottom: 1.5rem;
   font-size: 35px;
-  
+
 }
 
 .city-info p {
@@ -197,13 +211,14 @@ header {
   padding: 1rem 2rem;
   margin-bottom: 20px;
   border-radius: 100px;
-    text-align: center;
+  text-align: center;
 }
 
 .record-item h3 {
   margin: 0;
   font-size: 25px;
 }
+
 .record-item p {
   margin: 4px 0 0;
   font-size: 14px;
@@ -229,6 +244,7 @@ header {
   padding-left: 10%;
   padding-right: 10%;
 }
+
 .chart h1 {
   color: var(--titel-braun);
   margin-bottom: 1.5rem;
