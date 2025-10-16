@@ -1,28 +1,28 @@
 // Importiert die Dial-Funktion
 import { initDial } from './dial.js';
 
-// ===== HILFSFUNKTIONEN =====
+// ===== HILFSUNKTIONEN =====
 
 /**
  * Wettercode in Text und Icon umwandeln
  */
 function mapWeatherCode(code) {
   const map = {
-    0: { label: "Klar", icon: "img/sun.png" },
-    1: { label: "Überwiegend klar", icon: "img/überwiegend.png" },
-    2: { label: "Bewölkt", icon: "img/cloud.png" },
-    3: { label: "Bedeckt", icon: "img/cloud.png" },
-    45: { label: "Nebel", icon: "img/fog.png" },
-    48: { label: "Reifnebel", icon: "img/fog.png" },
-    51: { label: "Leichter Nieselregen", icon: "img/drizzle.png" },
-    61: { label: "Leichter Regen", icon: "img/rain.png" },
-    63: { label: "Mäßiger Regen", icon: "img/rain.png" },
-    65: { label: "Starker Regen", icon: "img/rain.png" },
-    71: { label: "Schneefall", icon: "img/snow.png" },
-    80: { label: "Regenschauer", icon: "img/shower.png" },
-    95: { label: "Gewitter", icon: "img/storm.png" },
+    0: { label: "Klar", icon: "img/sun.svg" },
+    1: { label: "Überwiegend klar", icon: "img/überwiegend.svg" },
+    2: { label: "Bewölkt", icon: "img/cloud.svg" },
+    3: { label: "Bedeckt", icon: "img/cloud.svg" },
+    45: { label: "Nebel", icon: "img/fog.svg" },
+    48: { label: "Reifnebel", icon: "img/fog.svg" },
+    51: { label: "Leichter Nieselregen", icon: "img/rain.svg" },
+    61: { label: "Leichter Regen", icon: "img/rain.svg" },
+    63: { label: "Mäßiger Regen", icon: "img/rain.svg" },
+    65: { label: "Starker Regen", icon: "img/show.svg" },
+    71: { label: "Schneefall", icon: "img/snow.svg" },
+    80: { label: "Regenschauer", icon: "img/shower.svg" },
+    95: { label: "Gewitter", icon: "img/storm.svg" },
   };
-  return map[code] || { label: `Wettercode ${code}`, icon: "img/cloud.png" };
+  return map[code] || { label: `Wettercode ${code}`, icon: "img/cloud.svg" };
 }
 
 /**
@@ -174,6 +174,7 @@ function setClockUI(date, el) {
 function setDataUI(entry, el) {
   if (!entry) {
     if (el.pm10) el.pm10.textContent = "-- PM10 μg/m³";
+    if (el.pm25) el.pm25.textContent = "-- PM2.5 μg/m³";
     if (el.temperature) el.temperature.textContent = "--°C";
     if (el.weather_icon) el.weather_icon.src = "img/cloud.png";
     // Kein TukTuk bei fehlenden Daten
@@ -182,6 +183,7 @@ function setDataUI(entry, el) {
   }
 
   if (el.pm10) el.pm10.textContent = `${entry.pm10} PM10 μg/m³`;
+  if (el.pm25) el.pm25.textContent = `${entry.pm2_5} PM2.5 μg/m³`;
   if (el.temperature) el.temperature.textContent = `${entry.temperature}°C`;
   const wc = mapWeatherCode(Number(entry.weather_code));
   if (el.weather_icon) el.weather_icon.src = wc.icon;
@@ -301,6 +303,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     city_image: document.getElementById("city_image"),
     description: document.getElementById("description"),
     pm10: document.getElementById("pm10"),
+    pm25: document.getElementById("pm25"),
     time: document.getElementById("time"),
     date: document.getElementById("date"),
     temperature: document.getElementById("temperature"),
@@ -371,6 +374,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (el.lowest) el.lowest.textContent = `${Math.min(...pm10Values)} PM10 μg/m³`;
     }
 
+    const pm2_5Values = series.map(d => Number(d.pm2_5)).filter(Number.isFinite);
+
+    const temperatureValues = series.map(d => Number(d.temperature)).filter(Number.isFinite);
+
     // === CHART ERSTELLEN ===
     if (el.chartCanvas) {
       console.log("Erstelle Chart...");
@@ -387,15 +394,36 @@ document.addEventListener("DOMContentLoaded", async () => {
               hour: "2-digit"
             });
           }),
-          datasets: [{
-            label: "PM10 μg/m³",
-            data: chartData.map(d => Number(d.pm10)),
-            borderWidth: 2,
-            tension: 0.3,
-            borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            fill: true
-          }]
+          datasets: [
+            {
+              label: "PM10 μg/m³",
+              data: chartData.map(d => Number(d.pm10)),
+              borderWidth: 2,
+              tension: 0.3,
+              borderColor: 'rgb(75, 192, 192)',
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              fill: true
+            },
+            {
+              label: "PM2.5 μg/m³",
+              data: chartData.map(d => Number(d.pm2_5)), // pm2_5 mit Unterstrich
+              borderWidth: 2,
+              tension: 0.3,
+              borderColor: 'rgb(255, 206, 86)',
+              backgroundColor: 'rgba(255, 206, 86, 0.2)',
+              fill: true
+            },
+            {
+
+              label: "Temperatur °C",
+              data: chartData.map(d => Number(d.temperature)),
+              borderWidth: 2,
+              tension: 0.3,
+              borderColor: 'rgb(255, 99, 132)',
+              backgroundColor: 'rgba(255, 99, 132, 0.2)',
+              fill: true
+            }
+          ]
         },
         options: {
           responsive: true,
@@ -409,7 +437,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           scales: {
             y: {
               beginAtZero: true,
-              title: { display: true, text: 'PM10 μg/m³' }
+              title: { display: true, text: '' }
             },
             x: {
               title: { display: true, text: 'Datum/Zeit' }
