@@ -130,7 +130,12 @@ function updateTuktuks(pm10) {
     img.style.animationDuration = `${duration}s`;
     img.style.animationDelay = `${delay}s`;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     
+=======
+    img.style.left = '-150px'; // sicherstellen, dass Startposition gesetzt ist
+
+>>>>>>> Stashed changes
 =======
     img.style.left = '-150px'; // sicherstellen, dass Startposition gesetzt ist
 
