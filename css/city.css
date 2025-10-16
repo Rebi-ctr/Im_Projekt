@@ -98,13 +98,6 @@ header {
   -webkit-user-select: none;
   touch-action: none;
   outline: none;
-
-
-/* CSS MASKE - macht den Kreis nur dort sichtbar wo KEIN Stadtbild ist */
-  -webkit-mask: 
-    radial-gradient(circle at center, transparent 0%, transparent 40%, black 45%);
-  mask: 
-    radial-gradient(circle at center, transparent 0%, transparent 40%, black 45%);
 }
 
 /* Das Stadtbild selbst */
