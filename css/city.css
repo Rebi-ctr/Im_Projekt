@@ -183,15 +183,6 @@ header {
 .tuktuk {
   position: absolute;
   bottom: 8px;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  left: 0;
-=======
-  /* klare Startposition links außerhalb */
->>>>>>> Stashed changes
-=======
-  /* klare Startposition links außerhalb */
->>>>>>> Stashed changes
   width: 80px;
   height: auto;
 
@@ -199,22 +190,7 @@ header {
   animation-iteration-count: infinite;
   animation-direction: alternate; /* wichtig! fährt hin & zurück */
   will-change: left, transform;
-
   opacity: 0.95;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
-  z-index: 25;
-=======
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
-  z-index: 25;
-  /* Über allem anderen */
->>>>>>> Stashed changes
-=======
-  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
-  z-index: 25;
-  /* Über allem anderen */
->>>>>>> Stashed changes
 }
 
 /* Layer-spezifische Positions / z-index - KEIN transform hier! */
@@ -240,7 +216,6 @@ header {
   width: 60px;
 }
 
-<<<<<<< Updated upstream
 /* TukTuk fährt von links nach rechts und wieder zurück */
 @keyframes tuktuk-bounce {
   0%   { left: 0;   transform: translateZ(0) scaleX(1) scale(1); }
@@ -262,48 +237,6 @@ header {
   49.999% { transform: translateZ(0) scaleX(1) scale(0.9); }
   50%  { left: calc(100% - 100px); transform: translateZ(0) scaleX(-1) scale(0.9); }
   100% { left: 0;   transform: translateZ(0) scaleX(-1) scale(0.9); }
-=======
-/* Animation: links -> rechts mit optionaler Skalierung in Keyframes */
-@keyframes tuktuk-drive {
-  0% {
-    left: -150px;
-    transform: translateZ(0) scale(1);
-  }
-
-  100% {
-    left: calc(100% + 150px);
-    transform: translateZ(0) scale(1);
-  }
-}
-
-/* Layer-2: leicht kleiner */
-@keyframes tuktuk-drive-layer2 {
-  0% {
-    left: -150px;
-    transform: translateZ(0) scale(0.95);
-  }
-
-  100% {
-    left: calc(100% + 150px);
-    transform: translateZ(0) scale(0.95);
-  }
-}
-
-/* Layer-3: noch kleiner */
-@keyframes tuktuk-drive-layer3 {
-  0% {
-    left: -150px;
-    transform: translateZ(0) scale(0.9);
-  }
-
-  100% {
-    left: calc(100% + 150px);
-    transform: translateZ(0) scale(0.9);
-  }
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 }
 
 
