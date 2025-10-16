@@ -70,7 +70,6 @@ function updateSkyColor(date) {
 
 /**
  * Erzeugt bzw. aktualisiert TukTuks basierend auf pm10.
- * Pro 10 μg/m³ ein TukTuk (gerundet runter).
  */
 function updateTuktuks(pm10) {
   const track = document.getElementById("tuktukTrack");
@@ -79,22 +78,20 @@ function updateTuktuks(pm10) {
     return;
   }
 
-  console.log(`updateTuktuks aufgerufen mit PM10: ${pm10}`); // Debug
+  console.log(`updateTuktuks aufgerufen mit PM10: ${pm10}`);
 
-  // wenn kein Wert (oder string "--"), leere die Fahrspur
   if (pm10 === null || pm10 === undefined || pm10 === "--" || !Number.isFinite(Number(pm10))) {
     track.innerHTML = "";
     console.log("Keine gültigen PM10-Daten, TukTuk-Track geleert");
     return;
   }
 
-  const value = Math.max(0, Math.floor(Number(pm10) / 10)); // Pro 10 μg ein TukTuk
+  const value = Math.max(0, Math.floor(Number(pm10) / 10));
   const MAX_TUKS = 30;
   const count = Math.min(value, MAX_TUKS);
 
-  console.log(`PM10: ${pm10} → ${count} TukTuks werden erstellt`); // Debug
+  console.log(`PM10: ${pm10} → ${count} TukTuks werden erstellt`);
 
-  // Clear existing
   track.innerHTML = "";
 
   if (count === 0) {
@@ -102,33 +99,33 @@ function updateTuktuks(pm10) {
     return;
   }
 
-  // TukTuk Bild
   const svgSrc = "img/TukTuk.png";
 
   for (let i = 0; i < count; i++) {
     const img = document.createElement("img");
-
-    // Layer-Klassen
     const layerClass = i % 3 === 0 ? "layer-1" : (i % 3 === 1 ? "layer-2" : "layer-3");
     img.className = `tuktuk ${layerClass}`;
-
+    
     if (count > 5) img.classList.add("small");
+    
+    img.src = svgSrc;
+    img.alt = "TukTuk";
+    img.ariaHidden = "true";
 
-    img.setAttribute("src", svgSrc);
-    img.setAttribute("alt", "TukTuk");
-    img.setAttribute("aria-hidden", "true");
+    // ✅ VERBESSERTE TIMING-LOGIK
+    const baseDuration = 15 + Math.random() * 10; // 15-25 Sekunden
+    const speedFactor = Math.max(0.5, 1 - (value / 50)); // Langsamere TukTuks bei mehr Verschmutzung
+    const duration = baseDuration * speedFactor;
 
-    // Animation Timing
-    const baseDuration = 20; // Sekunden
-    const durationVariance = Math.random() * 6; // 0-6s Varianz
-    const duration = Math.max(6, baseDuration - Math.min(4, value / 2) + durationVariance);
-
-    // Zufällige Verzögerung
-    const delay = Math.random() * duration; // Positive delay
+    // ✅ RANDOM DELAY für versetzte Starts (negative Werte = starten mitten in Animation)
+    const delay = -Math.random() * duration;
 
     // CSS Eigenschaften setzen
     img.style.animationDuration = `${duration}s`;
     img.style.animationDelay = `${delay}s`;
+    
+    // ✅ ANIMATION DIRECTION AUF "NORMAL" (nicht alternate)
+    img.style.animationDirection = "normal";
 
     // Layer-spezifische Animationen
     if (layerClass === "layer-2") {
@@ -141,15 +138,14 @@ function updateTuktuks(pm10) {
 
     img.style.animationTimingFunction = "linear";
     img.style.animationIterationCount = "infinite";
-    img.style.animationDirection = "alternate";
     img.style.animationFillMode = "both";
 
     track.appendChild(img);
-
-    console.log(`TukTuk ${i + 1}/${count} erstellt (${layerClass}, ${duration.toFixed(1)}s)`); // Debug
+    
+    console.log(`TukTuk ${i+1}/${count} erstellt (${layerClass}, ${duration.toFixed(1)}s, delay: ${delay.toFixed(1)}s)`);
   }
 
-  console.log(`${count} TukTuks erfolgreich erstellt`);
+  console.log(`${count} TukTuks erstellt mit echten Richtungswechseln`);
 }
 
 /**
