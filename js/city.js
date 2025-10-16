@@ -70,6 +70,86 @@ function updateSkyColor(date) {
 }
 
 /**
+ * Erzeugt bzw. aktualisiert TukTuks basierend auf pm10.
+ * Pro 10 μg/m³ ein TukTuk (gerundet runter).
+ */
+function updateTuktuks(pm10) {
+  const track = document.getElementById("tuktukTrack");
+  if (!track) {
+    console.error("tuktukTrack Element nicht gefunden!");
+    return;
+  }
+
+  console.log(`updateTuktuks aufgerufen mit PM10: ${pm10}`); // Debug
+
+  // wenn kein Wert (oder string "--"), leere die Fahrspur
+  if (pm10 === null || pm10 === undefined || pm10 === "--" || !Number.isFinite(Number(pm10))) {
+    track.innerHTML = "";
+    console.log("Keine gültigen PM10-Daten, TukTuk-Track geleert");
+    return;
+  }
+
+  const value = Math.max(0, Math.floor(Number(pm10) / 10)); // Pro 10 μg ein TukTuk
+  const MAX_TUKS = 30;
+  const count = Math.min(value, MAX_TUKS);
+
+  console.log(`PM10: ${pm10} → ${count} TukTuks werden erstellt`); // Debug
+
+  // Clear existing
+  track.innerHTML = "";
+
+  if (count === 0) {
+    console.log("PM10 < 10, keine TukTuks");
+    return;
+  }
+
+  // TukTuk Bild
+  const svgSrc = "img/TukTuk.png";
+
+  for (let i = 0; i < count; i++) {
+    const img = document.createElement("img");
+    
+    // Layer-Klassen
+    const layerClass = i % 3 === 0 ? "layer-1" : (i % 3 === 1 ? "layer-2" : "layer-3");
+    img.className = `tuktuk ${layerClass}`;
+    
+    if (count > 5) img.classList.add("small");
+    
+    img.setAttribute("src", svgSrc);
+    img.setAttribute("alt", "TukTuk");
+    img.setAttribute("aria-hidden", "true");
+
+    // Animation Timing
+    const baseDuration = 12; // Sekunden
+    const durationVariance = Math.random() * 6; // 0-6s Varianz
+    const duration = Math.max(6, baseDuration - Math.min(4, value / 2) + durationVariance);
+
+    // Zufällige Verzögerung
+    const delay = Math.random() * duration; // Positive delay
+
+    // CSS Eigenschaften setzen
+    img.style.animationDuration = `${duration}s`;
+    img.style.animationDelay = `${delay}s`;
+    img.style.left = '-150px'; // sicherstellen, dass Startposition gesetzt ist
+    
+    // Layer-spezifische Animationen
+    if (layerClass === "layer-2") {
+      img.style.animationName = "tuktuk-drive-layer2";
+    } else if (layerClass === "layer-3") {
+      img.style.animationName = "tuktuk-drive-layer3";
+    } else {
+      img.style.animationName = "tuktuk-drive";
+    }
+
+    track.appendChild(img);
+    
+    console.log(`TukTuk ${i+1}/${count} erstellt (${layerClass}, ${duration.toFixed(1)}s)`); // Debug
+  }
+
+  console.log(`${count} TukTuks erfolgreich erstellt`);
+}
+
+/**
  * UI-Helper: Zeit und Datum in DOM schreiben
  */
 function setClockUI(date, el) {
@@ -93,18 +173,21 @@ function setClockUI(date, el) {
  */
 function setDataUI(entry, el) {
   if (!entry) {
-    console.warn("Keine Daten für diesen Zeitpunkt verfügbar");
     if (el.pm10) el.pm10.textContent = "-- PM10 μg/m³";
     if (el.temperature) el.temperature.textContent = "--°C";
     if (el.weather_icon) el.weather_icon.src = "img/cloud.png";
+    // Kein TukTuk bei fehlenden Daten
+    updateTuktuks("--");
     return;
   }
 
   if (el.pm10) el.pm10.textContent = `${entry.pm10} PM10 μg/m³`;
   if (el.temperature) el.temperature.textContent = `${entry.temperature}°C`;
-
   const wc = mapWeatherCode(Number(entry.weather_code));
   if (el.weather_icon) el.weather_icon.src = wc.icon;
+
+  // Hier die TukTuks aktualisieren
+  updateTuktuks(Number(entry.pm10));
 }
 
 // ===== ZEIT-HELFER =====
@@ -195,6 +278,9 @@ function calculateTargetDate(baseDate, dateWithinDay, turns) {
 
   return targetDate;
 }
+
+
+
 
 // ===== MAIN SCRIPT =====
 

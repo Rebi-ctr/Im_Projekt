@@ -162,6 +162,76 @@ header {
   outline-offset: 6px;
 }
 
+/* TukTuk-Container unter dem Bild */
+.tuktuk-track {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  margin-top: 20px; /* Mehr Abstand zum Stadtbild */
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Einzelnes TukTuk */
+.tuktuk {
+  position: absolute;
+  bottom: 8px;            /* klare Startposition links außerhalb */
+  width: 80px;
+  height: auto;
+
+  /* Animation Eigenschaften - Standard (kann per JS überschrieben werden) */
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: none;
+  will-change: left, transform;
+
+  opacity: 0.95;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
+  z-index: 25; /* Über allem anderen */
+}
+
+/* Layer-spezifische Positions / z-index - KEIN transform hier! */
+.tuktuk.layer-1 { 
+  bottom: 8px; 
+  z-index: 25; 
+}
+
+.tuktuk.layer-2 { 
+  bottom: 28px; 
+  z-index: 26; 
+  /* kein transform hier — vermeidet Konflikte mit den Keyframes */
+}
+
+.tuktuk.layer-3 { 
+  bottom: 48px; 
+  z-index: 27; 
+  /* kein transform hier */
+}
+
+/* Kleinere TukTuks */
+.tuktuk.small { 
+  width: 60px; 
+}
+
+/* Animation: links -> rechts mit optionaler Skalierung in Keyframes */
+@keyframes tuktuk-drive {
+  0%   { left: -150px; transform: translateZ(0) scale(1); }
+  100% { left: calc(100% + 150px); transform: translateZ(0) scale(1); }
+}
+
+/* Layer-2: leicht kleiner */
+@keyframes tuktuk-drive-layer2 {
+  0%   { left: -150px; transform: translateZ(0) scale(0.95); }
+  100% { left: calc(100% + 150px); transform: translateZ(0) scale(0.95); }
+}
+
+/* Layer-3: noch kleiner */
+@keyframes tuktuk-drive-layer3 {
+  0%   { left: -150px; transform: translateZ(0) scale(0.9); }
+  100% { left: calc(100% + 150px); transform: translateZ(0) scale(0.9); }
+}
+
+
 
 
 /* Stadtinfos */
