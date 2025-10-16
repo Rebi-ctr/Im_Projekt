@@ -122,9 +122,9 @@ const addDays = (date, days) => {
 };
 
 /**
- * Zeit auf 15-Minuten-Raster snappen
+ * Zeit auf 15-Minuten-Raster snappen (immer abrunden)
  */
-const snap15 = (date) => new Date(Math.round(date.getTime() / MS15) * MS15);
+const snap15 = (date) => new Date(Math.floor(date.getTime() / MS15) * MS15);
 
 /**
  * Datum zu lokalem DB-Key formatieren ("YYYY-MM-DD HH:mm:00")
@@ -270,7 +270,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tz = "Asia/Kolkata";
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
     const baseDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const startMinutes = now.getHours() * 60 + Math.round(now.getMinutes() / 15) * 15;
+    const startMinutes = now.getHours() * 60 + Math.floor(now.getMinutes() / 15) * 15; // Abrunden statt runden
 
     // Aktuelle Daten anzeigen
     const currentEntry = findEntryForDateTime(series, now);
@@ -348,6 +348,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         baseDate,
         startMinutes,
         snapMinutes: 15,
+        maxTurns: 0, // NEU: Keine Umdrehungen in die Zukunft erlaubt
+        maxMinutes: now.getHours() * 60 + Math.floor(now.getMinutes() / 15) * 15, // NEU: Aktuelle Zeit als Maximum (abgerundet)
 
         // Wird beim Drehen ausgeführt
         onChange: (dateWithinDay, turns) => {
