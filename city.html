@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="pageTitle">City</title>
 
   <link rel="stylesheet" href="css/city.css" />
@@ -10,6 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 </head>
+
 <body>
 
   <header>
@@ -44,42 +46,42 @@
     <section class="city-image">
 
       <div class="dial-wrap" id="dialWrap" tabindex="0" aria-label="Drehbarer Kreis">
-      
-      <!-- Optional: Fixpunkt/Marker oben -->
-      <div class="marker" aria-hidden="true"></div>
 
-      <!-- Deine Kreis-Grafik -->
-      <img id="dial" class="dial" src="/img/Kreis.png" alt="Kreisgrafik" />
-    
-    </div>
+        <!-- Optional: Fixpunkt/Marker oben -->
+        <div class="marker" aria-hidden="true"></div>
 
-        <img id="city_image" src="" alt="Stadtbild">
+        <!-- Deine Kreis-Grafik -->
+        <img id="dial" class="dial" src="/img/Kreis.svg" alt="Kreisgrafik" />
+
+      </div>
+
+      <img id="city_image" src="" alt="Stadtbild">
     </section>
 
-      <!-- TukTuk-Spur -->
-       <section class="tuktuk-section">
-  <div id="tuktukTrack" class="tuktuk-track" aria-hidden="true"></div>
-</section>
+    <!-- TukTuk-Spur -->
+    <section class="tuktuk-section">
+      <div id="tuktukTrack" class="tuktuk-track" aria-hidden="true"></div>
+    </section>
 
     <!-- Stadtinfos -->
     <section class="city-info">
       <h1 id="city_name">CITY</h1>
       <div class="city-info-content">
         <div class="record-list">
-            <div class="record-item">
-                <h3 class="red" id="record">-- PM10 μg/m³</h3>
-                <p class="red">RECORD</p>
-            </div>
-            <div class="record-item">
-                <h3 id="average">-- PM10 μg/m³</h3>
-                <p>AVERAGE</p>
-            </div>
-            <div class="record-item">
-                <h3 id="lowest">-- PM10 μg/m³</h3>
-                <p>LOWEST</p>
-            </div>
+          <div class="record-item">
+            <h3 class="red" id="record">-- PM10 μg/m³</h3>
+            <p class="red">RECORD</p>
+          </div>
+          <div class="record-item">
+            <h3 id="average">-- PM10 μg/m³</h3>
+            <p>AVERAGE</p>
+          </div>
+          <div class="record-item">
+            <h3 id="lowest">-- PM10 μg/m³</h3>
+            <p>LOWEST</p>
+          </div>
         </div>
-      
+
 
         <p id="description" class="description">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
@@ -98,4 +100,5 @@
   <!-- Dein JS -->
   <script src="js/city.js" type="module"></script>
 </body>
+
 </html>

@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Rewrite /mumbai to city.html?city=Mumbai
+RewriteRule ^mumbai/?$ city.html?city=Mumbai [L,QSA]
+RewriteRule ^chennai/?$ city.html?city=Chennai [L,QSA]
+RewriteRule ^delhi/?$ city.html?city=Delhi [L,QSA]
+RewriteRule ^kolkata/?$ city.html?city=Kolkata [L,QSA]
+RewriteRule ^bangalore/?$ city.html?city=Bangalore [L,QSA]
