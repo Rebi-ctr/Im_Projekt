@@ -29,45 +29,44 @@ function mapWeatherCode(code) {
  * Passt die Hintergrundfarbe (Himmel) basierend auf der Uhrzeit an.
  */
 function updateSkyColor(date) {
+  // Nachtblau exakt wie im CSS (#001b1f)
+  const NIGHT = [0, 27, 31];
+
   const hour = date.getHours();
   const min = date.getMinutes();
-  const t = hour + min / 60; // z. B. 13.5 = 13:30 Uhr
+  const t = hour + min / 60;
 
-  // Definiere wichtige Zeitpunkte des Tages
-  const keyframes = [
-    { time: 0, color: [0, 20, 31] },    // Mitternacht
-    { time: 5, color: [80, 100, 150] }, // Morgendämmerung
-    { time: 8, color: [79, 195, 247] }, // Tag
-    { time: 17, color: [255, 182, 161] },// Abend
-    { time: 20, color: [10, 30, 70] },   // Nachtbeginn
-    { time: 24, color: [0, 20, 31] }     // zurück zu Mitternacht
+  const lerp = (a, b, f) => a + (b - a) * f;
+  const lerp3 = (c1, c2, f) => [
+    Math.round(lerp(c1[0], c2[0], f)),
+    Math.round(lerp(c1[1], c2[1], f)),
+    Math.round(lerp(c1[2], c2[2], f)),
+  ];
+  const smoothstep = x => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
+
+  const KF = [
+    { time: 0.0, top: NIGHT, bottom: NIGHT },
+    { time: 5.0, top: [10, 30, 70], bottom: [255, 160, 120] }, // Morgendämmerung
+    // Vormittag
+    { time: 12.0, top: [157, 189, 209], bottom: [157, 189, 209] }, // Mittag
+    { time: 17.5, top: [60, 120, 200], bottom: [255, 180, 120] }, // Golden Hour
+    { time: 19.2, top: [15, 40, 90], bottom: [255, 180, 120] }, // Blue Hour
+    { time: 20.5, top: NIGHT, bottom: NIGHT },           // Nacht
+    { time: 24.0, top: NIGHT, bottom: NIGHT },
   ];
 
-  // Finde die zwei Keyframes, zwischen denen wir uns befinden
-  let c1, c2;
-  for (let i = 0; i < keyframes.length - 1; i++) {
-    if (t >= keyframes[i].time && t < keyframes[i + 1].time) {
-      c1 = keyframes[i];
-      c2 = keyframes[i + 1];
-      break;
-    }
+  let k1 = KF[0], k2 = KF[1];
+  for (let i = 0; i < KF.length - 1; i++) {
+    if (t >= KF[i].time && t < KF[i + 1].time) { k1 = KF[i]; k2 = KF[i + 1]; break; }
   }
-  if (!c1) { c1 = keyframes[0]; c2 = keyframes[1]; }
+  let f = smoothstep((t - k1.time) / (k2.time - k1.time || 1));
+  const top = lerp3(k1.top, k2.top, f);
+  const bottom = lerp3(k1.bottom, k2.bottom, f);
 
-  // Wie weit sind wir zwischen den beiden Zeitpunkten?
-  const f = (t - c1.time) / (c2.time - c1.time);
-
-  // Interpolierte Farbe berechnen (RGB-Mischung)
-  const mix = (a, b) => Math.round(a + (b - a) * f);
-  const [r, g, b] = [
-    mix(c1.color[0], c2.color[0]),
-    mix(c1.color[1], c2.color[1]),
-    mix(c1.color[2], c2.color[2])
-  ];
-
-  const color = `rgb(${r}, ${g}, ${b})`;
-  document.documentElement.style.setProperty("--bg-sky", color);
+  const gradient = `linear-gradient(180deg, rgb(${top[0]}, ${top[1]}, ${top[2]}) 0%, rgb(${bottom[0]}, ${bottom[1]}, ${bottom[2]}) 100%)`;
+  document.documentElement.style.setProperty("--bg-sky", gradient);
 }
+
 
 /**
  * Erzeugt bzw. aktualisiert TukTuks basierend auf pm10.
@@ -108,13 +107,13 @@ function updateTuktuks(pm10) {
 
   for (let i = 0; i < count; i++) {
     const img = document.createElement("img");
-    
+
     // Layer-Klassen
     const layerClass = i % 3 === 0 ? "layer-1" : (i % 3 === 1 ? "layer-2" : "layer-3");
     img.className = `tuktuk ${layerClass}`;
-    
+
     if (count > 5) img.classList.add("small");
-    
+
     img.setAttribute("src", svgSrc);
     img.setAttribute("alt", "TukTuk");
     img.setAttribute("aria-hidden", "true");
@@ -130,7 +129,12 @@ function updateTuktuks(pm10) {
     // CSS Eigenschaften setzen
     img.style.animationDuration = `${duration}s`;
     img.style.animationDelay = `${delay}s`;
+<<<<<<< Updated upstream
     
+=======
+    img.style.left = '-150px'; // sicherstellen, dass Startposition gesetzt ist
+
+>>>>>>> Stashed changes
     // Layer-spezifische Animationen
     if (layerClass === "layer-2") {
       img.style.animationName = "tuktuk-bounce-layer2";
@@ -146,8 +150,8 @@ function updateTuktuks(pm10) {
     img.style.animationFillMode = "both";
 
     track.appendChild(img);
-    
-    console.log(`TukTuk ${i+1}/${count} erstellt (${layerClass}, ${duration.toFixed(1)}s)`); // Debug
+
+    console.log(`TukTuk ${i + 1}/${count} erstellt (${layerClass}, ${duration.toFixed(1)}s)`); // Debug
   }
 
   console.log(`${count} TukTuks erfolgreich erstellt`);

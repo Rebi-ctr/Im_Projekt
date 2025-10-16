@@ -1,6 +1,6 @@
 :root {
-  --bg-sky: #001b1f;
-  /* Start: Nacht */
+  /* Himmels-Verlauf als Fallback beim ersten Paint (Nacht) */
+  --bg-sky: linear-gradient(180deg, rgb(0, 27, 31) 0%, rgb(0, 27, 31) 100%);
   --bg-ground: #4E2A00;
   --lightgrey: #d9d9d9;
   --text-title: #7A282E;
@@ -13,10 +13,15 @@
 body {
   margin: 0;
   font-family: var(--font);
-  background: linear-gradient(to bottom, var(--bg-sky), var(--bg-ground));
-  transition: background 1s ease, background-color 1s ease;
+  background: var(--bg-sky);
+  /* <-- nur der Himmel */
+  background-attachment: fixed;
+  /* ruhiger, „echter“ Himmelseindruck */
+  transition: background 400ms linear;
+  /* sanfter Übergang der Verläufe */
   color: var(--lightgrey);
 }
+
 
 /* Zurück-Button */
 header {
@@ -167,7 +172,8 @@ header {
   position: relative;
   width: 100%;
   height: 100px;
-  margin-top: 20px; /* Mehr Abstand zum Stadtbild */
+  margin-top: 20px;
+  /* Mehr Abstand zum Stadtbild */
   overflow: hidden;
   pointer-events: none;
   background-color: #C0F6FF;
@@ -177,7 +183,11 @@ header {
 .tuktuk {
   position: absolute;
   bottom: 8px;
+<<<<<<< Updated upstream
   left: 0;
+=======
+  /* klare Startposition links außerhalb */
+>>>>>>> Stashed changes
   width: 80px;
   height: auto;
 
@@ -187,33 +197,40 @@ header {
   will-change: left, transform;
 
   opacity: 0.95;
+<<<<<<< Updated upstream
   filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25));
   z-index: 25;
+=======
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.25));
+  z-index: 25;
+  /* Über allem anderen */
+>>>>>>> Stashed changes
 }
 
 /* Layer-spezifische Positions / z-index - KEIN transform hier! */
-.tuktuk.layer-1 { 
-  bottom: 8px; 
-  z-index: 25; 
+.tuktuk.layer-1 {
+  bottom: 8px;
+  z-index: 25;
 }
 
-.tuktuk.layer-2 { 
-  bottom: 28px; 
-  z-index: 26; 
+.tuktuk.layer-2 {
+  bottom: 28px;
+  z-index: 26;
   /* kein transform hier — vermeidet Konflikte mit den Keyframes */
 }
 
-.tuktuk.layer-3 { 
-  bottom: 48px; 
-  z-index: 27; 
+.tuktuk.layer-3 {
+  bottom: 48px;
+  z-index: 27;
   /* kein transform hier */
 }
 
 /* Kleinere TukTuks */
-.tuktuk.small { 
-  width: 60px; 
+.tuktuk.small {
+  width: 60px;
 }
 
+<<<<<<< Updated upstream
 /* TukTuk fährt von links nach rechts und wieder zurück */
 @keyframes tuktuk-bounce {
   0%   { left: 0;   transform: translateZ(0) scaleX(1) scale(1); }
@@ -235,6 +252,45 @@ header {
   49.999% { transform: translateZ(0) scaleX(1) scale(0.9); }
   50%  { left: calc(100% - 100px); transform: translateZ(0) scaleX(-1) scale(0.9); }
   100% { left: 0;   transform: translateZ(0) scaleX(-1) scale(0.9); }
+=======
+/* Animation: links -> rechts mit optionaler Skalierung in Keyframes */
+@keyframes tuktuk-drive {
+  0% {
+    left: -150px;
+    transform: translateZ(0) scale(1);
+  }
+
+  100% {
+    left: calc(100% + 150px);
+    transform: translateZ(0) scale(1);
+  }
+}
+
+/* Layer-2: leicht kleiner */
+@keyframes tuktuk-drive-layer2 {
+  0% {
+    left: -150px;
+    transform: translateZ(0) scale(0.95);
+  }
+
+  100% {
+    left: calc(100% + 150px);
+    transform: translateZ(0) scale(0.95);
+  }
+}
+
+/* Layer-3: noch kleiner */
+@keyframes tuktuk-drive-layer3 {
+  0% {
+    left: -150px;
+    transform: translateZ(0) scale(0.9);
+  }
+
+  100% {
+    left: calc(100% + 150px);
+    transform: translateZ(0) scale(0.9);
+  }
+>>>>>>> Stashed changes
 }
 
 
