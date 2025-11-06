@@ -370,3 +370,400 @@ header {
     gap: 1rem;
   }
 }
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* Large Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+
+  /* Header */
+  header {
+    padding: 20px 0px 0px 20px;
+  }
+
+  .back-button img {
+    width: 60px;
+    height: 60px;
+  }
+
+  /* Info Container */
+  .info-container {
+    margin: 80px 5% 0 5%;
+    gap: 2rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .info-box h2 {
+    font-size: 28px;
+    padding: 8px 30px;
+  }
+
+  .info-box p {
+    font-size: 24px;
+  }
+
+  /* Zeit-Box */
+  .time-box h1 {
+    font-size: 60px;
+    margin-top: -250px;
+  }
+
+  /* Dial */
+  .dial-wrap {
+    width: 450px;
+    height: 450px;
+    top: 35%;
+  }
+
+  /* City Image */
+  .city-image img {
+    max-width: 600px;
+  }
+
+  /* TukTuk */
+  .tuktuk {
+    width: 140px;
+  }
+
+  .tuktuk.small {
+    width: 100px;
+  }
+
+  /* City Info */
+  .city-info {
+    padding: 250px 8% 40px 8%;
+  }
+
+  .city-info h1 {
+    font-size: 30px;
+  }
+
+  .record-item h3 {
+    font-size: 22px;
+  }
+
+  /* Chart */
+  .chart {
+    padding-left: 8%;
+    padding-right: 8%;
+    min-height: 420px;
+    /* anpassen: Höhe der Chart-Box */
+  }
+
+  /* Wenn Chart.js die Größe per Inline-Style überschreibt, erzwinge die Canvas-Höhe */
+  .chart canvas {
+    height: 420px !important;
+    /* anpassen */
+    max-height: 800px !important;
+  }
+
+  .chart h1 {
+    font-size: 30px;
+  }
+}
+
+/* Small Tablets (600px - 768px) */
+@media (max-width: 768px) {
+
+  /* Info Container - zu 2 Spalten */
+  .info-container {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1.5rem;
+    margin: 60px 5% 0 5%;
+  }
+
+  /* Zeit-Box über beide Spalten */
+  .time-box {
+    grid-column: 1 / -1;
+    order: -1;
+  }
+
+  .time-box h1 {
+    font-size: 50px;
+    margin-top: -180px;
+  }
+
+  .info-box h2 {
+    font-size: 24px;
+    padding: 6px 20px;
+  }
+
+  .info-box p {
+    font-size: 20px;
+  }
+
+  /* Dial */
+  .dial-wrap {
+    width: 350px;
+    height: 350px;
+    top: 40%;
+  }
+
+  /* City Image */
+  .city-image {
+    margin-bottom: -80px;
+  }
+
+  .city-image img {
+    max-width: 500px;
+  }
+
+  /* TukTuk */
+  .tuktuk-track {
+    height: 150px;
+    margin-top: -120px;
+  }
+
+  .tuktuk.layer-1 {
+    bottom: -150px;
+  }
+
+  .tuktuk.layer-2 {
+    bottom: -60px;
+  }
+
+  .tuktuk.layer-3 {
+    bottom: -100px;
+  }
+
+  /* City Info */
+  .city-info {
+    padding: 200px 5% 30px 5%;
+  }
+
+  .city-info-content {
+    gap: 30px;
+  }
+
+  .city-info h1 {
+    font-size: 28px;
+  }
+
+  .city-info p {
+    font-size: 16px;
+  }
+
+  /* Chart */
+  .chart {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+
+
+/* Mobile (320px - 600px) */
+@media (max-width: 600px) {
+
+  /* Header */
+  header {
+    padding: 15px 0px 0px 15px;
+  }
+
+  .back-button img {
+    width: 50px;
+    height: 50px;
+  }
+
+  /* Info Container - einspaltiges Layout */
+  .info-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 40px 5% 0 5%;
+    padding: 1rem;
+  }
+
+  .time-box {
+    order: -1;
+  }
+
+  .time-box h1 {
+    font-size: 45px;
+    margin-top: -150px;
+  }
+
+  .time-box p {
+    font-size: 12px;
+    margin-top: -30px;
+  }
+
+  .info-box h2 {
+    font-size: 20px;
+    padding: 5px 15px;
+  }
+
+  .info-box p {
+    font-size: 18px;
+  }
+
+  /* Weather Info */
+  .weather-info {
+    gap: 5px;
+  }
+
+  .weather-info img {
+    width: 30px;
+    height: 30px;
+  }
+
+  /* Dial */
+  .dial-wrap {
+    width: 280px;
+    height: 280px;
+    top: 45%;
+  }
+
+  .marker {
+    top: 15px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid var(--lightblue);
+  }
+
+  /* City Image */
+  .city-image {
+    margin-bottom: -60px;
+  }
+
+  .city-image img {
+    max-width: 350px;
+  }
+
+  /* TukTuk */
+  .tuktuk-track {
+    height: 120px;
+    margin-top: -100px;
+  }
+
+  .tuktuk {
+    width: 90px;
+  }
+
+  .tuktuk.small {
+    width: 70px;
+  }
+
+  .tuktuk.layer-1 {
+    bottom: -120px;
+  }
+
+  .tuktuk.layer-2 {
+    bottom: -50px;
+  }
+
+  .tuktuk.layer-3 {
+    bottom: -80px;
+  }
+
+  /* City Info */
+  .city-info {
+    padding: 150px 5% 25px 5%;
+  }
+
+  .city-info-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .city-info h1 {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+
+  .city-info p {
+    font-size: 14px;
+  }
+
+  /* Record Pills */
+  .record-item {
+    padding: 0.8rem 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .record-item h3 {
+    font-size: 18px;
+  }
+
+  .record-item p {
+    font-size: 12px;
+  }
+
+  /* Description */
+  .description {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  /* Chart */
+  .chart {
+    padding: 1.5rem 5%;
+    margin-top: -20px;
+  }
+
+  .chart h1 {
+    font-size: 22px;
+    margin-bottom: 1rem;
+  }
+
+  /* Chart Canvas responsive */
+  .chart canvas {
+    max-height: 300px !important;
+  }
+}
+
+/* Extra Small Mobile (max 320px) */
+@media (max-width: 320px) {
+  .time-box h1 {
+    font-size: 40px;
+  }
+
+  .info-box h2 {
+    font-size: 18px;
+  }
+
+  .info-box p {
+    font-size: 16px;
+  }
+
+  .dial-wrap {
+    width: 250px;
+    height: 250px;
+  }
+
+  .city-image img {
+    max-width: 300px;
+  }
+
+  .tuktuk {
+    width: 80px;
+  }
+
+  .city-info h1 {
+    font-size: 22px;
+  }
+
+  .record-item h3 {
+    font-size: 16px;
+  }
+
+  .chart h1 {
+    font-size: 20px;
+  }
+}
+
+/* Touch-optimierte Interaktionen */
+@media (hover: none) and (pointer: coarse) {
+  .dial {
+    cursor: default;
+  }
+
+  .dial:active {
+    cursor: default;
+  }
+
+  /* Größere Touch-Targets */
+  .back-button {
+    padding: 10px;
+  }
+}
