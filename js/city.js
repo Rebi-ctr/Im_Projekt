@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             },
             {
               label: "PM2.5 μg/m³",
-              data: chartData.map(d => Number(d.pm2_5)), // pm2_5 mit Unterstrich
+              data: chartData.map(d => Number(d.pm2_5)),
               borderWidth: 2,
               tension: 0.3,
               borderColor: 'rgb(255, 206, 86)',

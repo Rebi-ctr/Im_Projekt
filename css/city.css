@@ -363,14 +363,9 @@ header {
   font-size: 35px;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .info-container {
-    flex-direction: column;
-    gap: 1rem;
-  }
-}
 
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+/* ===== RESPONSIVE BREAKPOINTS ===== */
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 
 /* Large Tablets (768px - 1024px) */
@@ -446,13 +441,13 @@ header {
   .chart {
     padding-left: 8%;
     padding-right: 8%;
-    min-height: 420px;
+    min-height: 600px;
     /* anpassen: Höhe der Chart-Box */
   }
 
   /* Wenn Chart.js die Größe per Inline-Style überschreibt, erzwinge die Canvas-Höhe */
   .chart canvas {
-    height: 420px !important;
+    height: 600px !important;
     /* anpassen */
     max-height: 800px !important;
   }
