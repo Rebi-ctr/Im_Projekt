@@ -236,43 +236,48 @@ body {
     
     .map-small {
         display: block;
+        width: 700px;
+        transform: translateX(-14%); /* nach links schieben */
+        margin-top: 105px;
+        padding-bottom: 50px;
+        
     }
 
     /* Titel für Mobile anpassen */
     .title {
-        right: 5%;
-        top: 15%;
+        right: 20%;
+        top: 70%;
     }
 
     .title span {
-        font-size: 32px;
+        font-size: 40px;
         letter-spacing: 2px;
     }
 
     /* City-Buttons für Mobile-Karte neu positionieren */
     .delhi {
-        left: 35%;
-        top: 25%;
+        left: 7%;
+        top: 30%;
     }
 
     .kolkata {
-        left: 55%;
-        top: 35%;
+        left: 40%;
+        top: 38%;
     }
 
     .mumbai {
-        left: 20%;
-        top: 50%;
+        left: 5%;
+        top: 49%;
     }
 
     .chennai {
-        left: 45%;
-        top: 75%;
+        left: 27%;
+        top: 67%;
     }
 
     .bangalore {
-        left: 25%;
-        top: 65%;
+        left: 2%;
+        top: 83%;
     }
 
     /* Buttons kleiner machen */
@@ -288,5 +293,41 @@ body {
     /* MapIndia Container anpassen */
     .MapIndia {
         margin-top: -100px;
+    }
+
+    .moving-tuktuk {
+        bottom: 60%;              /* etwas höher, weil die Karte kleiner wird */
+        right: -110%;             /* Start etwas weiter rechts */
+        animation: flyLeftTab 6s linear;
+    }
+
+    .moving-tuktuk img {
+        width: 550px;             /* kleineres Fahrzeug */
+    }
+
+    @keyframes flyLeftTab {
+        0% {
+            transform: translateX(0vw);
+        }
+        100% {
+            transform: translateX(-350vw);
+        }
+    }
+}
+
+@media (max-width: 560px) {
+    .title {
+        right: 42%;
+        /* top: 82%; */
+        top: 3%;
+    }
+
+    .title span {
+        font-size: 32px;
+    }
+
+    .kolkata {
+        left: 33%;
+        top: 38%;
     }
 }
