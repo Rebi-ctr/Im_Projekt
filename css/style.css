@@ -3,11 +3,8 @@
     --blue-start: #092529;
     --font: "Cormorant Garamond", serif;
     --bubble-bg: #2b5162;
-    /* Blauer Button (normal) */
     --bubble-bg-hover: #446b7c;
-    /* Heller auf Hover */
     --page-max: 1200px;
-
 }
 
 body {
@@ -16,8 +13,6 @@ body {
     background-color: var(--blue-start);
     color: var(--brown-font);
 }
-
-
 
 /* Layout der Startseite */
 .home {
@@ -43,7 +38,6 @@ body {
     display: none;
 }
 
-/* Titel rechts, wie im Design */
 .title {
     position: absolute;
     right: 1%;
@@ -84,14 +78,12 @@ body {
     }
 }
 
-
-
 /* ---------- City Buttons ---------- */
 
 .city-btn {
     position: absolute;
     text-decoration: none;
-    /* Klickfläche – nur die „Bubble“ sichtbar */
+    
     width: 200px;
     height: 80px;
 }
@@ -153,7 +145,6 @@ body {
 }
 
 /* ---------- Positionen (pro Stadt an Karte angepasst) ---------- */
-/* Tipp: Feinjustierung per Prozent, bis es für deine Karte passt */
 
 .delhi {
     left: 30%;
@@ -179,30 +170,6 @@ body {
     left: 8%;
     top: 72%;
 }
-
-/* @media (max-width: 1024px) {
-    .MapIndia {
-        margin-top: -180px;
-    }
-
-    .MapIndia img {
-        width: 62vw;
-        max-width: 650px;
-    }
-
-    .title span {
-        font-size: 54px;
-    }
-
-    .city-btn {
-        width: 175px;
-        height: 70px;
-    }
-
-    .city-btn img {
-        height: 60px;
-    }
-} */
 
 @media (max-width: 1024px) {
    .title {
@@ -237,7 +204,7 @@ body {
     .map-small {
         display: block;
         width: 700px;
-        transform: translateX(-14%); /* nach links schieben */
+        transform: translateX(-14%); 
         margin-top: 105px;
         padding-bottom: 50px;
         
@@ -296,13 +263,13 @@ body {
     }
 
     .moving-tuktuk {
-        bottom: 60%;              /* etwas höher, weil die Karte kleiner wird */
-        right: -110%;             /* Start etwas weiter rechts */
+        bottom: 60%;             
+        right: -110%;             
         animation: flyLeftTab 6s linear;
     }
 
     .moving-tuktuk img {
-        width: 550px;             /* kleineres Fahrzeug */
+        width: 550px;          
     }
 
     @keyframes flyLeftTab {
@@ -318,7 +285,6 @@ body {
 @media (max-width: 560px) {
     .title {
         right: 42%;
-        /* top: 82%; */
         top: 3%;
     }
 
