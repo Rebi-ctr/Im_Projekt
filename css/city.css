@@ -183,7 +183,7 @@ header {
 /* Einzelnes TukTuk */ 
 .tuktuk { 
   position: absolute; 
-  width: 160px; 
+  width: 120px; 
   height: auto; 
   animation-timing-function: linear; 
   animation-iteration-count: infinite; 
@@ -531,7 +531,7 @@ header {
   }
 
   .tuktuk {
-    width: 120px;
+    width: 90px;
   }
 
   .tuktuk.small {
