@@ -426,6 +426,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             legend: { display: true },
             title: {
@@ -436,14 +437,14 @@ document.addEventListener("DOMContentLoaded", async () => {
           scales: {
             y: {
               beginAtZero: true,
-              title: { display: true, text: '' }
+              title: { display: true, text: "" }
             },
             x: {
-              title: { display: true, text: 'Datum/Zeit' }
+              title: { display: true, text: "Datum/Zeit" }
             }
           }
         }
-      });
+});
       console.log("Chart erfolgreich erstellt");
     }
 
