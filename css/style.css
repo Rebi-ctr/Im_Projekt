@@ -35,6 +35,14 @@ body {
     margin-top: -250px;
 }
 
+.map-large {
+    display: block;
+}
+
+.map-small {
+    display: none;
+}
+
 /* Titel rechts, wie im Design */
 .title {
     position: absolute;
@@ -170,4 +178,115 @@ body {
 .bangalore {
     left: 8%;
     top: 72%;
+}
+
+/* @media (max-width: 1024px) {
+    .MapIndia {
+        margin-top: -180px;
+    }
+
+    .MapIndia img {
+        width: 62vw;
+        max-width: 650px;
+    }
+
+    .title span {
+        font-size: 54px;
+    }
+
+    .city-btn {
+        width: 175px;
+        height: 70px;
+    }
+
+    .city-btn img {
+        height: 60px;
+    }
+} */
+
+@media (max-width: 1024px) {
+   .title {
+        right: 15%;
+    }
+
+    .title span {
+        font-size: 54px;
+
+    }
+  
+}
+
+@media (max-width: 930px) {
+   .title {
+        right: 28%;
+        top: 60%;
+    }
+
+    .title span {
+        font-size: 40px;
+
+    }
+  
+}
+
+@media (max-width: 768px) {
+    .map-large {
+        display: none;
+    }
+    
+    .map-small {
+        display: block;
+    }
+
+    /* Titel für Mobile anpassen */
+    .title {
+        right: 5%;
+        top: 15%;
+    }
+
+    .title span {
+        font-size: 32px;
+        letter-spacing: 2px;
+    }
+
+    /* City-Buttons für Mobile-Karte neu positionieren */
+    .delhi {
+        left: 35%;
+        top: 25%;
+    }
+
+    .kolkata {
+        left: 55%;
+        top: 35%;
+    }
+
+    .mumbai {
+        left: 20%;
+        top: 50%;
+    }
+
+    .chennai {
+        left: 45%;
+        top: 75%;
+    }
+
+    .bangalore {
+        left: 25%;
+        top: 65%;
+    }
+
+    /* Buttons kleiner machen */
+    .city-btn {
+        width: 150px;
+        height: 60px;
+    }
+
+    .city-btn img {
+        height: 50px;
+    }
+
+    /* MapIndia Container anpassen */
+    .MapIndia {
+        margin-top: -100px;
+    }
 }
