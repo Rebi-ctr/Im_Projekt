@@ -71,6 +71,9 @@ function updateSkyColor(date) {
 /**
  * Erzeugt bzw. aktualisiert TukTuks basierend auf pm10.
  */
+// merkt sich den zuletzt gerenderten PM10-Wert
+let lastPm10Value = null;
+
 function updateTuktuks(pm10) {
   const track = document.getElementById("tuktukTrack");
   if (!track) {
@@ -78,19 +81,36 @@ function updateTuktuks(pm10) {
     return;
   }
 
-  console.log(`updateTuktuks aufgerufen mit PM10: ${pm10}`);
+  // Eingabe normalisieren
+  const num = Number(pm10);
+  const hasValidValue = pm10 !== null && pm10 !== undefined && pm10 !== "--" && Number.isFinite(num);
 
-  if (pm10 === null || pm10 === undefined || pm10 === "--" || !Number.isFinite(Number(pm10))) {
-    track.innerHTML = "";
-    console.log("Keine gültigen PM10-Daten, TukTuk-Track geleert");
+  // wenn kein gültiger Wert → leeren und Merker zurücksetzen
+  if (!hasValidValue) {
+    if (lastPm10Value !== null) {
+      track.innerHTML = "";
+      console.log("Keine gültigen PM10-Daten, TukTuk-Track geleert");
+    }
+    lastPm10Value = null;
     return;
   }
 
-  const value = Math.max(0, Math.floor(Number(pm10) / 10));
+  // wenn sich der Wert nicht geändert hat → nichts tun
+  if (num === lastPm10Value) {
+    // console.log("PM10 unverändert, TukTuks nicht neu gerendert");
+    return;
+  }
+
+  // ab hier: es hat sich wirklich etwas geändert
+  lastPm10Value = num;
+
+  console.log(`updateTuktuks aufgerufen mit PM10: ${num}`);
+
+  const value = Math.max(0, Math.floor(num / 10));
   const MAX_TUKS = 30;
   const count = Math.min(value, MAX_TUKS);
 
-  console.log(`PM10: ${pm10} → ${count} TukTuks werden erstellt`);
+  console.log(`PM10: ${num} → ${count} TukTuks werden erstellt`);
 
   track.innerHTML = "";
 
@@ -105,29 +125,23 @@ function updateTuktuks(pm10) {
     const img = document.createElement("img");
     const layerClass = i % 3 === 0 ? "layer-1" : (i % 3 === 1 ? "layer-2" : "layer-3");
     img.className = `tuktuk ${layerClass}`;
-    
+
     if (count > 5) img.classList.add("small");
-    
+
     img.src = svgSrc;
     img.alt = "TukTuk";
     img.ariaHidden = "true";
 
-    // ✅ VERBESSERTE TIMING-LOGIK
-    const baseDuration = 15 + Math.random() * 10; // 15-25 Sekunden
-    const speedFactor = Math.max(0.5, 1 - (value / 50)); // Langsamere TukTuks bei mehr Verschmutzung
+    const baseDuration = 15 + Math.random() * 10; // 15–25s
+    const speedFactor = Math.max(0.5, 1 - (value / 50));
     const duration = baseDuration * speedFactor;
 
-    // ✅ RANDOM DELAY für versetzte Starts (negative Werte = starten mitten in Animation)
     const delay = -Math.random() * duration;
 
-    // CSS Eigenschaften setzen
     img.style.animationDuration = `${duration}s`;
     img.style.animationDelay = `${delay}s`;
-    
-    // ✅ ANIMATION DIRECTION AUF "NORMAL" (nicht alternate)
     img.style.animationDirection = "normal";
 
-    // Layer-spezifische Animationen
     if (layerClass === "layer-2") {
       img.style.animationName = "tuktuk-bounce-layer2";
     } else if (layerClass === "layer-3") {
@@ -141,12 +155,15 @@ function updateTuktuks(pm10) {
     img.style.animationFillMode = "both";
 
     track.appendChild(img);
-    
-    console.log(`TukTuk ${i+1}/${count} erstellt (${layerClass}, ${duration.toFixed(1)}s, delay: ${delay.toFixed(1)}s)`);
+
+    console.log(
+      `TukTuk ${i + 1}/${count} erstellt (${layerClass}, ${duration.toFixed(1)}s, delay: ${delay.toFixed(1)}s)`
+    );
   }
 
   console.log(`${count} TukTuks erstellt mit echten Richtungswechseln`);
 }
+
 
 /**
  * UI-Helper: Zeit und Datum in DOM schreiben
