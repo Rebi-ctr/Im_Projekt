@@ -208,6 +208,17 @@ function setDataUI(entry, el) {
   updateTuktuks(Number(entry.pm10));
 }
 
+/**
+ * Zeigt Loading-State an wenn Daten noch nicht geladen sind
+ */
+function showLoadingState(el) {
+  if (el.time) el.time.textContent = "Laden...";
+  if (el.date) el.date.textContent = "Daten werden geladen";
+  if (el.pm10) el.pm10.textContent = "-- PM10 μg/m³";
+  if (el.temperature) el.temperature.textContent = "Laden...";
+  if (el.description) el.description.textContent = "Lade Stadtinformationen...";
+}
+
 // ===== ZEIT-HELFER =====
 
 const MS15 = 15 * 60 * 1000; // 15 Minuten in Millisekunden
@@ -304,11 +315,18 @@ function calculateTargetDate(baseDate, dateWithinDay, turns) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   // 1) Stadt aus der URL
+  const loader = document.getElementById("loader");
   const params = new URLSearchParams(location.search);
   const cityKey = params.get("city");
   if (!cityKey) {
     console.error("Kein ?city Parameter in der URL");
     return;
+  }
+
+  // Loader anzeigen
+  if (loader) {
+    loader.style.display = "flex";
+    loader.classList.remove("hidden");
   }
 
   // 2) DOM Elemente sammeln
@@ -508,6 +526,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.error("Fehler beim Laden der Daten:", error);
     if (el.description) {
       el.description.textContent = "Fehler beim Laden der Daten. Bitte versuchen Sie es später erneut.";
+    }
+  } finally {
+    // Loader verstecken nach dem Laden (erfolgreich oder mit Fehler)
+    if (loader) {
+      loader.classList.add("hidden");
+      setTimeout(() => loader.style.display = "none", 500);
     }
   }
 });

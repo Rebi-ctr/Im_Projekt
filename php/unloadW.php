@@ -34,8 +34,11 @@ try {
       ON a.city = w.city
      AND a.datetimelocal = w.datetimelocal
     WHERE a.city = :city
+    AND a.datetimelocal >= DATE_SUB(NOW(), INTERVAL 7 DAY)
     ORDER BY a.datetimelocal DESC
+    LIMIT 672
   ");
+  
   $stmtData->execute([':city' => $city]);
   $timeseries = $stmtData->fetchAll(PDO::FETCH_ASSOC);
 
