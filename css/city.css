@@ -429,7 +429,7 @@ h2{
 
   .info-box h2 {
     font-size: 28px;
-    padding: 8px 30px;
+    padding: 8px 20px;
   }
 
   .info-box p {
@@ -444,14 +444,15 @@ h2{
 
   /* Dial */
   .dial-wrap {
-    width: 450px;
-    height: 450px;
-    top: 35%;
+    width: 550px;
+    height: 550px;
+    margin-top: -30px;
   }
 
   /* City Image */
   .city-image img {
-    max-width: 600px;
+    max-width: 550px;
+    margin-bottom: 400px; 
   }
 
   /* TukTuk */
@@ -464,7 +465,7 @@ h2{
   }
 
   .tuktuk-track {
-    height: 170px;
+    height: 100px;
   }
 
   .tuktuk.layer-1 {
