@@ -73,10 +73,5 @@ if (isset($weatherdata['latitude']) && is_array($weatherdata['latitude'])) {
     }
 }
 
-// --- 5. Kontrolle / Debug
-// echo "<pre>";
-// print_r($transformedData);
-// echo "</pre>";
-
-// --- 6. Rückgabe für load.php
+// --- 5. Rückgabe für load.php
 return $transformedData;

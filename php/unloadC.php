@@ -21,7 +21,7 @@ try {
     // Erstellt eine neue PDO-Instanz mit der Konfiguration aus config.php
     $pdo = new PDO($dsn, $username, $password, $options);
 
-  // --- 1) Meta-Daten (aus city_description) ---
+  // Meta-Daten (aus city_description)
   $stmtMeta = $pdo->prepare("
     SELECT city, description, image
     FROM city_description
@@ -36,7 +36,8 @@ try {
     echo json_encode(['error' => 'Unknown city']);
     exit;
   }
-
+  
+// JSON-Ausgabe
 echo json_encode($meta, JSON_PRETTY_PRINT);
 
 } catch (PDOException $e) {

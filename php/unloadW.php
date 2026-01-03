@@ -6,7 +6,7 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization');
 
 
 
-require_once 'config.php'; // Stellen Sie sicher, dass dies auf Ihre tatsächliche Konfigurationsdatei verweist
+require_once 'config.php'; 
  header('Content-Type: application/json; charset=utf-8');
 
 $city = $_GET['city'] ?? null;
@@ -21,7 +21,7 @@ try {
     // Erstellt eine neue PDO-Instanz mit der Konfiguration aus config.php
     $pdo = new PDO($dsn, $username, $password, $options);
 
-  // --- 2) Zeitreihen-Daten (Air Quality + Wetter) ---
+  // Zeitreihen-Daten (Air Quality + Wetter)
   $stmtData = $pdo->prepare("
     SELECT 
       a.datetimelocal,
@@ -39,11 +39,10 @@ try {
   $stmtData->execute([':city' => $city]);
   $timeseries = $stmtData->fetchAll(PDO::FETCH_ASSOC);
 
-  // --- 3) JSON-Ausgabe ---
+  // JSON-Ausgabe
   echo json_encode($timeseries, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 
 } catch (PDOException $e) {
   http_response_code(500);
   echo json_encode(['error' => 'Datenbankfehler: ' . $e->getMessage()]);
 }
-

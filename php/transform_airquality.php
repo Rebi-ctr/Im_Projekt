@@ -45,8 +45,3 @@ foreach ($airdata as $entry) {
         'datetimelocal' => $datetimeLocal
     ];
 }
-
-// // --- 6. Ausgabe zur Kontrolle
-// echo "<pre>";
-// print_r($transformedData);
-// echo "</pre>";
