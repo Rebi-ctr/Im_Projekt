@@ -21,7 +21,7 @@
 
   <header>
     <a href="index.html" class="back-button">
-      <img src="img/Zurück Button.svg" alt="Zurück">
+      <img src="img/ZurückButton.svg" alt="Zurück">
     </a>
   </header>
 
@@ -48,29 +48,29 @@
     </section>
 
     <!-- Stadtbild mit Tag-Nacht-Slider -->
-    <section class="city-image">
+    <div class="city-image">
 
-      <div class="dial-wrap" id="dialWrap" tabindex="0" aria-label="Drehbarer Kreis">
+      <div class="dial-wrap" id="dialWrap" tabindex="0" role="slider" aria-label="Drehbarer Kreis zur Zeitauswahl" aria-valuemin="0" aria-valuemax="1440" aria-valuenow="720">
 
-        <!-- Optional: Fixpunkt/Marker oben -->
-        <div class="marker" aria-hidden="true"></div>
+       <!-- Optional: Fixpunkt/Marker oben -->
+      <div class="marker" aria-hidden="true"></div>
 
         <!-- Deine Kreis-Grafik -->
         <img id="dial" class="dial" src="/img/Kreis.svg" alt="Kreisgrafik" />
 
       </div>
 
-      <img id="city_image" src="" alt="Stadtbild">
-    </section>
+     <img id="city_image" src="img/placeholder-city.jpg" alt="Stadtbild">
+    </div>
 
     <!-- TukTuk-Spur -->
-    <section class="tuktuk-section">
+    <div class="tuktuk-section">
       <div id="tuktukTrack" class="tuktuk-track" aria-hidden="true"></div>
-    </section>
+    </div>
 
     <!-- Stadtinfos -->
-    <section class="city-info">
-      <h1 id="city_name">CITY</h1>
+    <div class="city-info">
+      <h2 id="city_name">CITY</h2>
       <div class="city-info-content">
         <div class="record-list">
           <div class="record-item">
@@ -90,17 +90,16 @@
 
         <p id="description" class="description">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
       </div>
-    </section>
+    </div>
 
     <div class="chart">
-      <h1>AIR QUALITY IN THE PAST WEEK:</h1>
+      <h2>AIR QUALITY IN THE PAST WEEK:</h2>
       <div class="chart-container">
        <canvas id="airQualityChart"></canvas>
      </div>
     </div>
-
-</div>
 
   </main>
   <!-- Chart.js CDN -->

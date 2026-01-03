@@ -462,49 +462,52 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === DIAL INITIALISIEREN ===
     const wrap = document.getElementById("dialWrap");
-    const dial = document.getElementById("dial");
+const dial = document.getElementById("dial");
 
-    if (wrap && dial) {
-      console.log("Initialisiere Dial...");
+if (wrap && dial) {
+  console.log("Initialisiere Dial...");
 
+  initDial({
+    wrap,
+    dial,
+    baseDate,
+    startMinutes,
+    snapMinutes: 15,
+    maxTurns: 0,
+    maxMinutes: now.getHours() * 60 + Math.floor(now.getMinutes() / 15) * 15,
 
-      initDial({
-        wrap,
-        dial,
-        baseDate,
-        startMinutes,
-        snapMinutes: 15,
-        maxTurns: 0, // NEU: Keine Umdrehungen in die Zukunft erlaubt
-        maxMinutes: now.getHours() * 60 + Math.floor(now.getMinutes() / 15) * 15, // NEU: Aktuelle Zeit als Maximum (abgerundet)
+    // Wird beim Drehen ausgeführt
+    onChange: (dateWithinDay, turns) => {
+      const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
+      setClockUI(targetDate, el);
 
-        // Wird beim Drehen ausgeführt
-        onChange: (dateWithinDay, turns) => {
-          const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
-          setClockUI(targetDate, el);
+      // ✅ HIER: aria-valuenow aktualisieren
+      const minutes = targetDate.getHours() * 60 + targetDate.getMinutes();
+      wrap.setAttribute('aria-valuenow', minutes);
 
-        // 🌤 Hintergrund anpassen
-        updateSkyColor(dateWithinDay);
-        },
+      // 🌤 Hintergrund anpassen
+      updateSkyColor(dateWithinDay);
+    },
 
-        // Wird nach dem Loslassen ausgeführt
-        onIdle: (dateWithinDay, turns) => {
-          const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
-          const entry = findEntryForDateTime(series, targetDate);
-          setDataUI(entry, el);
-        }
-      });
-
-      console.log("Dial erfolgreich initialisiert");
-    } else {
-      console.warn("Dial-Elemente nicht gefunden");
+    // Wird nach dem Loslassen ausgeführt
+    onIdle: (dateWithinDay, turns) => {
+      const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
+      const entry = findEntryForDateTime(series, targetDate);
+      setDataUI(entry, el);
     }
+  });
+
+  console.log("Dial erfolgreich initialisiert");
+} else {
+  console.warn("Dial-Elemente nicht gefunden");
+}
 
   } catch (error) {
     console.error("Fehler beim Laden der Daten:", error);
     if (el.description) {
       el.description.textContent = "Fehler beim Laden der Daten. Bitte versuchen Sie es später erneut.";
     }
-    
+
   } finally {
     // Loader verstecken nach dem Laden (erfolgreich oder mit Fehler)
     if (loader) {
