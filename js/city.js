@@ -3,10 +3,8 @@ import { initDial } from './dial.js';
 
 // ===== HILFSUNKTIONEN =====
 
-/**
- * Wettercode in Text und Icon umwandeln
- */
-function mapWeatherCode(code) {
+//Wettercode in Text und Icon umwandeln
+ function mapWeatherCode(code) {
   const map = {
     0: { label: "Klar", icon: "img/sun.svg" },
     1: { label: "Überwiegend klar", icon: "img/überwiegend.svg" },
@@ -25,11 +23,9 @@ function mapWeatherCode(code) {
   return map[code] || { label: `Wettercode ${code}`, icon: "img/cloud.svg" };
 }
 
-/**
- * Passt die Hintergrundfarbe (Himmel) basierend auf der Uhrzeit an.
- */
+// Passt die Hintergrundfarbe (Himmel) basierend auf der Uhrzeit an.
 function updateSkyColor(date) {
-  // Nachtblau exakt wie im CSS (#001b1f)
+  // Nachtblau RGB(0, 27, 31)
   const NIGHT = [0, 27, 31];
 
   const hour = date.getHours();
@@ -47,7 +43,6 @@ function updateSkyColor(date) {
   const KF = [
     { time: 0.0, top: NIGHT, bottom: NIGHT },
     { time: 5.0, top: [10, 30, 70], bottom: [255, 160, 120] }, // Morgendämmerung
-    // Vormittag
     { time: 12.0, top: [157, 189, 209], bottom: [157, 189, 209] }, // Mittag
     { time: 17.5, top: [60, 120, 200], bottom: [255, 180, 120] }, // Golden Hour
     { time: 19.2, top: [15, 40, 90], bottom: [255, 180, 120] }, // Blue Hour
@@ -68,9 +63,7 @@ function updateSkyColor(date) {
 }
 
 
-/**
- * Erzeugt bzw. aktualisiert TukTuks basierend auf pm10.
- */
+// Erzeugt bzw. aktualisiert TukTuks basierend auf pm10.
 // merkt sich den zuletzt gerenderten PM10-Wert
 let lastPm10Value = null;
 
@@ -165,9 +158,7 @@ function updateTuktuks(pm10) {
 }
 
 
-/**
- * UI-Helper: Zeit und Datum in DOM schreiben
- */
+// UI-Helper: Zeit und Datum in DOM schreiben
 function setClockUI(date, el) {
   if (el.time) {
     el.time.textContent = date.toLocaleTimeString("de-CH", {
@@ -184,9 +175,7 @@ function setClockUI(date, el) {
   }
 }
 
-/**
- * UI-Helper: Wetter- und Luftqualitätsdaten in DOM schreiben
- */
+//UI-Helper: Wetter- und Luftqualitätsdaten in DOM schreiben
 function setDataUI(entry, el) {
   if (!entry) {
     if (el.pm10) el.pm10.textContent = "-- PM10 μg/m³";
@@ -208,9 +197,7 @@ function setDataUI(entry, el) {
   updateTuktuks(Number(entry.pm10));
 }
 
-/**
- * Zeigt Loading-State an wenn Daten noch nicht geladen sind
- */
+// Zeigt Loading-State an wenn Daten noch nicht geladen sind
 function showLoadingState(el) {
   if (el.time) el.time.textContent = "Laden...";
   if (el.date) el.date.textContent = "Daten werden geladen";
@@ -224,32 +211,24 @@ function showLoadingState(el) {
 const MS15 = 15 * 60 * 1000; // 15 Minuten in Millisekunden
 const pad2 = n => String(n).padStart(2, "0");
 
-/**
- * Datum um Tage verschieben
- */
+// Datum um Tage verschieben
 const addDays = (date, days) => {
   const result = new Date(date);
   result.setDate(result.getDate() + days);
   return result;
 };
 
-/**
- * Zeit auf 15-Minuten-Raster snappen (immer abrunden)
- */
+// Zeit auf 15-Minuten-Raster snappen (immer abrunden)
 const snap15 = (date) => new Date(Math.floor(date.getTime() / MS15) * MS15);
 
-/**
- * Datum zu lokalem DB-Key formatieren ("YYYY-MM-DD HH:mm:00")
- */
+// Datum zu lokalem DB-Key formatieren ("YYYY-MM-DD HH:mm:00")
 function localKey(date) {
   return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())} `
     + `${pad2(date.getHours())}:${pad2(date.getMinutes())}:00`;
 }
 
-/**
- * Findet den passenden Datensatz für ein bestimmtes Datum/Zeit
- * Sucht zuerst exakten Match, dann den zeitlich nächstliegenden
- */
+// Findet den passenden Datensatz für ein bestimmtes Datum/Zeit
+// Sucht zuerst exakten Match, dann den zeitlich nächstliegenden
 function findEntryForDateTime(series, targetDate) {
   if (!series || !series.length) return null;
 
@@ -292,9 +271,7 @@ function findEntryForDateTime(series, targetDate) {
   return best;
 }
 
-/**
- * Berechnet das Ziel-Datum basierend auf Dial-Position
- */
+// Berechnet das Ziel-Datum basierend auf Dial-Position
 function calculateTargetDate(baseDate, dateWithinDay, turns) {
   // Basis-Datum + Tage-Offset durch Drehungen
   const targetDate = addDays(baseDate, turns || 0);
@@ -314,7 +291,7 @@ function calculateTargetDate(baseDate, dateWithinDay, turns) {
 // ===== MAIN SCRIPT =====
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1) Stadt aus der URL
+  // 1. Stadt aus der URL
   const loader = document.getElementById("loader");
   const params = new URLSearchParams(location.search);
   const cityKey = params.get("city");
@@ -323,13 +300,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Loader anzeigen
+  // 2. Loader anzeigen
   if (loader) {
     loader.style.display = "flex";
     loader.classList.remove("hidden");
   }
 
-  // 2) DOM Elemente sammeln
+  // 3. DOM Elemente sammeln
   const el = {
     pageTitle: document.getElementById("pageTitle"),
     city_name_top: document.getElementById("city_name_top"),
@@ -361,7 +338,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const API_URL_Info = `php/unloadC.php?city=${encodeURIComponent(cityKey)}`;
     const API_URL_Data = `php/unloadW.php?city=${encodeURIComponent(cityKey)}`;
 
-    // 1) Stadt-Meta laden
+    // 1. Stadt-Meta laden
     console.log("Lade Stadt-Infos für:", cityKey);
     const resInfo = await fetch(API_URL_Info);
     if (!resInfo.ok) throw new Error(`Info API HTTP ${resInfo.status}`);
@@ -369,14 +346,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     console.log("Stadt-Infos geladen:", meta);
 
-    // Meta-Daten setzen
+    // 2.Meta-Daten setzen
     if (el.pageTitle) el.pageTitle.textContent = meta.city;
     if (el.city_name_top) el.city_name_top.textContent = meta.city.toUpperCase();
     if (el.city_name) el.city_name.textContent = meta.city.toUpperCase();
     if (el.description) el.description.textContent = meta.description || "Keine Beschreibung verfügbar";
     if (meta.image && el.city_image) el.city_image.src = meta.image;
 
-    // 2) Zeitreihen-Daten laden
+    // 3. Zeitreihen-Daten laden
     console.log("Lade Zeitreihen-Daten für:", cityKey);
     const resData = await fetch(API_URL_Data);
     if (!resData.ok) throw new Error(`Data API HTTP ${resData.status}`);
@@ -389,7 +366,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // === STARTZUSTAND: AKTUELLE ZEIT IN GMT+5:30 (Indien) ===
+    // STARTZUSTAND: AKTUELLE ZEIT IN GMT+5:30 (Indien) 
     const tz = "Asia/Kolkata";
     const now = new Date(new Date().toLocaleString("en-US", { timeZone: tz }));
     const baseDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -505,8 +482,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           const targetDate = calculateTargetDate(baseDate, dateWithinDay, turns);
           setClockUI(targetDate, el);
 
-          // 🌤 Hintergrund anpassen
-          updateSkyColor(dateWithinDay);
+        // 🌤 Hintergrund anpassen
+        updateSkyColor(dateWithinDay);
         },
 
         // Wird nach dem Loslassen ausgeführt
@@ -527,6 +504,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (el.description) {
       el.description.textContent = "Fehler beim Laden der Daten. Bitte versuchen Sie es später erneut.";
     }
+    
   } finally {
     // Loader verstecken nach dem Laden (erfolgreich oder mit Fehler)
     if (loader) {
