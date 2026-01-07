@@ -185,7 +185,7 @@ h2{
   position: absolute;
   top: 10px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(180deg);
   width: 0;
   height: 0;
   border-left: 7px solid transparent;
@@ -422,7 +422,7 @@ h2{
 
   /* Info Container */
   .info-container {
-    margin: 80px 5% 0 5%;
+    margin: 100px 5% 0 5%;
     gap: 2rem;
     padding: 1.5rem 1rem;
   }
@@ -442,17 +442,21 @@ h2{
     margin-top: -250px;
   }
 
+  #date{
+    padding-top: 10px;
+  }
+
   /* Dial */
   .dial-wrap {
-    width: 550px;
-    height: 550px;
-    margin-top: -30px;
+    width: 450px;
+    height: 450px;
+    /* margin-top: -30px; */
   }
 
   /* City Image */
   .city-image img {
     max-width: 550px;
-    margin-bottom: 400px; 
+    margin-bottom: -21px; 
   }
 
   /* TukTuk */
@@ -465,7 +469,7 @@ h2{
   }
 
   .tuktuk-track {
-    height: 100px;
+    height: 150px;
   }
 
   .tuktuk.layer-1 {
@@ -482,7 +486,7 @@ h2{
 
   /* City Info */
   .city-info {
-    padding: 250px 8% 40px 8%;
+    padding: 200px 8% 40px 8%;
   }
 
   .city-info h1 {
@@ -516,6 +520,7 @@ h2{
     grid-template-rows: auto auto;
     gap: 1.5rem;
     margin: 60px 5% 0 5%;
+    padding-bottom: 50px;
   }
 
   /* Zeit-Box über beide Spalten */
@@ -537,22 +542,23 @@ h2{
 
   .info-box p {
     font-size: 20px;
+
   }
 
   /* Dial */
   .dial-wrap {
-    width: 320px;
-    height: 320px;
-    top: 40%;
+    width: 280px;
+    height: 280px;
+    top: 15%;
   }
 
   /* City Image */
   .city-image {
-    margin-bottom: -80px;
+    margin-bottom: 40px;
   }
 
   .city-image img {
-    max-width: 500px;
+    max-width: 350px;
   }
 
   /* TukTuk */
@@ -583,7 +589,7 @@ h2{
 
   /* City Info */
   .city-info {
-    padding: 200px 5% 30px 5%;
+    padding: 130px 5% 30px 5%;
   }
 
   .city-info-content {
@@ -627,7 +633,7 @@ h2{
     grid-template-columns: 1fr;
     gap: 1rem;
     margin: 40px 4% 0 4%;
-    padding: 1rem;
+    padding: 2rem;
   }
 
   .time-box {
@@ -671,7 +677,7 @@ h2{
   .dial-wrap {
     width: 240px;
     height: 240px;
-    top: 40%;          
+    top: 28%;          
   }
 
   .marker {
@@ -683,7 +689,7 @@ h2{
 
   /* City Image */
   .city-image {
-    margin-bottom: -60px;
+    margin-bottom: 60px;
   }
 
   .city-image img {
@@ -693,7 +699,7 @@ h2{
   /* TukTuk */
   .tuktuk-track {
     height: 100px;
-    transform: translateY(70px);
+    transform: translateY(120px);
   }
 
   .tuktuk {
@@ -718,7 +724,7 @@ h2{
 
   /* City Info */
   .city-info {
-    padding: 150px 5% 25px 5%;
+    padding: 120px 5% 25px 5%;
   }
 
   .city-info-content {
